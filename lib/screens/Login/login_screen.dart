@@ -1,7 +1,7 @@
 // Material.dart adalah library yang berisi widget yang sering digunakan
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tugasakhirmobile/repovm/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

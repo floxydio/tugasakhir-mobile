@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
-import 'package:tugasakhirmobile/repovm/auth_repository.dart';
-import 'package:tugasakhirmobile/screens/Login/login_screen.dart';
+import 'package:tugasakhirmobile/constant/shared_pref.dart';
+import 'package:tugasakhirmobile/screens/Home/home_screen.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/screens/login/login_screen.dart';
+import 'package:get/get.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (context) => AuthRepository())],
-    child: MaterialApp(
+    child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: const SplashScreen(),
+      builder: EasyLoading.init(),
     ),
   ));
 }
@@ -28,13 +33,28 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   // InitState adalah fungsi yang pertama kali dijalankan ketika class dibuat
   void initState() {
-    _checkTimer = Timer(
-        const Duration(seconds: 1),
-        () => {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()))
-            });
     super.initState();
+    checkToken();
+  }
+
+  void checkToken() async {
+    var token = await SharedPrefs().getAccessToken();
+    if (token.isEmpty) {
+      _checkTimer = Timer(
+          const Duration(seconds: 1),
+          () => {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()))
+              });
+    } else {
+      _checkTimer = Timer(
+          const Duration(seconds: 1),
+          () => {
+                Get.offAll(() => const HomeScreen()),
+              });
+    }
   }
 
   // Dispose adalah fungsi yang dijalankan ketika class di dispose
