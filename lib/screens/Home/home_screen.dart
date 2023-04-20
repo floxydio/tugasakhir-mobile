@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/icon_build.dart';
+import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,13 +14,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<IconBuild> iconBuild = [
-    IconBuild(name: "Absen", iconName: const Icon(Icons.book)),
     IconBuild(
-        name: "Mapel", iconName: const Icon(Icons.my_library_books_sharp)),
-    IconBuild(name: "Ebook", iconName: const Icon(Icons.book)),
-    IconBuild(name: "Guru", iconName: const Icon(Icons.people)),
+        page: const AbsenPage(),
+        name: "Absen",
+        iconName: const Icon(Icons.book)),
     IconBuild(
-        name: "Nilai", iconName: const Icon(Icons.pending_actions_outlined))
+        page: const AbsenPage(),
+        name: "Mapel",
+        iconName: const Icon(Icons.my_library_books_sharp)),
+    IconBuild(
+        page: const AbsenPage(),
+        name: "Ebook",
+        iconName: const Icon(Icons.book)),
+    IconBuild(
+        page: const AbsenPage(),
+        name: "Guru",
+        iconName: const Icon(Icons.people)),
+    IconBuild(
+        page: const AbsenPage(),
+        name: "Nilai",
+        iconName: const Icon(Icons.pending_actions_outlined))
   ];
 
   @override
@@ -86,26 +101,32 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisSpacing: 40,
                     mainAxisSpacing: 30),
                 itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 1,
-                              blurRadius: 1,
-                              offset: const Offset(0, 1))
-                        ]),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        iconBuild[index].iconName,
-                        const SizedBox(height: 10),
-                        Text(iconBuild[index].name,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16))
-                      ],
+                  return InkWell(
+                    onTap: () {
+                      Get.to(iconBuild[index].page,
+                          transition: Transition.rightToLeft);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(100),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 1,
+                                offset: const Offset(0, 1))
+                          ]),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          iconBuild[index].iconName,
+                          const SizedBox(height: 10),
+                          Text(iconBuild[index].name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16))
+                        ],
+                      ),
                     ),
                   );
                 })

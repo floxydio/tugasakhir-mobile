@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/screens/Home/home_screen.dart';
+import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   runApp(MultiProvider(
-    providers: [ChangeNotifierProvider(create: (context) => AuthRepository())],
+    providers: [
+      ChangeNotifierProvider(create: (context) => AbsenViewModel()),
+      ChangeNotifierProvider(create: (context) => AuthRepository())
+    ],
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),

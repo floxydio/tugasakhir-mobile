@@ -23,6 +23,7 @@ class DataJwt {
   int? id;
   String? nama;
   int? role;
+  int? kelasId;
 
   DataJwt({this.id, this.nama, this.role});
 
@@ -30,6 +31,7 @@ class DataJwt {
     id = json['id'];
     nama = json['nama'];
     role = json['role'];
+    kelasId = json['kelas_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -37,6 +39,7 @@ class DataJwt {
     data['id'] = this.id;
     data['nama'] = this.nama;
     data['role'] = this.role;
+    data['kelas_id'] = this.kelasId;
     return data;
   }
 }

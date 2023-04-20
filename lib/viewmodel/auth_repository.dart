@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/jwt_model.dart';
 import 'package:tugasakhirmobile/screens/home/home_screen.dart';
+import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 
 class AuthRepository extends ChangeNotifier {
   String urlLink = "http://localhost:3000";
@@ -22,11 +23,24 @@ class AuthRepository extends ChangeNotifier {
             return status! < 500;
           },
         ));
-    if (response.statusCode == 200) {
-      dataJwt = JWTModel.fromJson(response.data).data!;
-    } else {
-      Get.dialog(const AlertDialog(
-          title: Text("Error"), content: Text("Token invalid")));
+
+    try {
+      if (response.statusCode == 200) {
+        dataJwt = JWTModel.fromJson(response.data).data!;
+        SharedPrefs().setKelasId(dataJwt.kelasId ?? 0);
+      } else {
+        Get.dialog(const AlertDialog(
+            title: Text("Error"), content: Text("Token invalid")));
+        SharedPrefs().clearAccessToken();
+        Get.off(const LoginScreen());
+      }
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.connectionTimeout ||
+          e.type == DioErrorType.connectionError) {
+        EasyLoading.dismiss();
+        Get.dialog(const AlertDialog(
+            title: Text("Error"), content: Text("Connection Timeout")));
+      }
     }
     notifyListeners();
     EasyLoading.dismiss();
