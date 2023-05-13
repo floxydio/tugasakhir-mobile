@@ -8,7 +8,7 @@ import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 
 class AuthRepository extends ChangeNotifier {
-  String urlLink = "http://localhost:3000";
+  String urlLink = "http://103.174.115.58:3000";
   DataJwt dataJwt = DataJwt();
   void getRefreshToken() async {
     EasyLoading.show(status: 'Loading...');
@@ -57,6 +57,7 @@ class AuthRepository extends ChangeNotifier {
             return status! < 500;
           },
         ));
+    print(response.data);
     if (response.statusCode != 200) {
       Get.dialog(const AlertDialog(
           title: Text("Error"), content: Text("Username or Password Salah")));

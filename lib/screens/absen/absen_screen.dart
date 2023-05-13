@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/color_constant.dart';
+import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 
 class AbsenPage extends StatefulWidget {
   const AbsenPage({super.key});
@@ -19,11 +21,13 @@ class _AbsenPageState extends State<AbsenPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AbsenViewModel>(context, listen: false).getCurrentDay();
       Provider.of<AbsenViewModel>(context, listen: false).getAbsen();
+      Provider.of<AuthRepository>(context, listen: false).getRefreshToken();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var authVm = Provider.of<AuthRepository>(context, listen: false);
     return Consumer<AbsenViewModel>(builder: (context, absenVM, _) {
       return Scaffold(
           body: SafeArea(
@@ -52,29 +56,29 @@ class _AbsenPageState extends State<AbsenPage> {
               height: 40,
             ),
             absenVM.absenData.isEmpty
-                ? CircularProgressIndicator()
+                ? const Center(child: Text("Jadwal Tidak Ditemukan"))
                 : Center(
                     child: Column(children: [
                       Text(
                         absenVM.getDay.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 26, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                       Text(
                         absenVM.absenData[0].nama.toString(),
-                        style: TextStyle(fontSize: 24),
+                        style: const TextStyle(fontSize: 24),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
                         "(${absenVM.absenData[0].guru.toString()})",
-                        style: TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       SizedBox(
@@ -83,10 +87,21 @@ class _AbsenPageState extends State<AbsenPage> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 primary: ColorConstant.colorPrimary),
-                            onPressed: () {},
-                            child: Text("Absen Sekarang")),
+                            onPressed: () {
+                              var data = CreateAbsen(
+                                  userId: authVm.dataJwt.id!,
+                                  guruId: absenVM.absenData[0].guruId!,
+                                  kelasId: absenVM.absenData[0].kelasId!,
+                                  pelajaranId:
+                                      absenVM.absenData[0].pelajaranId!,
+                                  keterangan: "ABSEN");
+                              Provider.of<AbsenViewModel>(context,
+                                      listen: false)
+                                  .createAbsen(data);
+                            },
+                            child: const Text("Absen Sekarang")),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       SizedBox(
@@ -96,7 +111,7 @@ class _AbsenPageState extends State<AbsenPage> {
                             style: ElevatedButton.styleFrom(
                                 primary: ColorConstant.colorPrimary),
                             onPressed: () {},
-                            child: Text("Riwayat Absen")),
+                            child: const Text("Riwayat Absen")),
                       )
                     ]),
                   )

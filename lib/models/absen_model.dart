@@ -18,33 +18,48 @@ class AbsenModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
 
 class AbsenData {
+  int? kelasId;
+  int? guruId;
+  int? pelajaranId;
   String? nama;
   String? guru;
   int? kelasNomor;
 
-  AbsenData({this.nama, this.guru, this.kelasNomor});
+  AbsenData(
+      {this.kelasId,
+      this.guruId,
+      this.pelajaranId,
+      this.nama,
+      this.guru,
+      this.kelasNomor});
 
   AbsenData.fromJson(Map<String, dynamic> json) {
+    kelasId = json["kelas_id"];
+    guruId = json["guru_id"];
+    pelajaranId = json["pelajaran_id"];
     nama = json['nama'];
     guru = json['guru'];
     kelasNomor = json['kelas_nomor'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nama'] = this.nama;
-    data['guru'] = this.guru;
-    data['kelas_nomor'] = this.kelasNomor;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['kelas_id'] = kelasId;
+    data['guru_id'] = guruId;
+    data['pelajaran_id'] = pelajaranId;
+    data['nama'] = nama;
+    data['guru'] = guru;
+    data['kelas_nomor'] = kelasNomor;
     return data;
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/icon_build.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
+import 'package:tugasakhirmobile/screens/guru/guru_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
         name: "Ebook",
         iconName: const Icon(Icons.book)),
     IconBuild(
-        page: const AbsenPage(),
+        page: const GuruScreen(),
         name: "Guru",
         iconName: const Icon(Icons.people)),
     IconBuild(

@@ -8,12 +8,14 @@ import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:tugasakhirmobile/viewmodel/guru_viewmodel.dart';
 
 void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => AbsenViewModel()),
-      ChangeNotifierProvider(create: (context) => AuthRepository())
+      ChangeNotifierProvider(create: (context) => AuthRepository()),
+      ChangeNotifierProvider(create: (context) => GuruViewModel())
     ],
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
