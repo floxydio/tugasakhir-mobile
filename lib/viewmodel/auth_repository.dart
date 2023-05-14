@@ -4,10 +4,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/jwt_model.dart';
+import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
 import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 
-class AuthRepository extends ChangeNotifier {
+class AuthViewModel extends ChangeNotifier {
   String urlLink = "http://103.174.115.58:3000";
   DataJwt dataJwt = DataJwt();
   void getRefreshToken() async {
@@ -46,6 +47,11 @@ class AuthRepository extends ChangeNotifier {
     EasyLoading.dismiss();
   }
 
+  void logout() {
+    SharedPrefs().clearAccessToken();
+    Get.offAll(const LoginScreen());
+  }
+
   void loginUser(BuildContext context, String username, String password) async {
     Map<String, dynamic> data = {"username": username, "password": password};
     var response = await Dio().post("$urlLink/v1/sign-in",
@@ -63,7 +69,7 @@ class AuthRepository extends ChangeNotifier {
           title: Text("Error"), content: Text("Username or Password Salah")));
     } else {
       await SharedPrefs().setAccessToken(response.data["accessToken"]);
-      Get.off(const HomeScreen());
+      Get.off(const BottomBar());
     }
     notifyListeners();
   }

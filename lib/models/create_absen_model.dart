@@ -4,6 +4,7 @@ class CreateAbsen {
   final int kelasId;
   final int pelajaranId;
   final String keterangan;
+  final String reason;
 
   CreateAbsen({
     required this.userId,
@@ -11,5 +12,6 @@ class CreateAbsen {
     required this.kelasId,
     required this.pelajaranId,
     required this.keterangan,
+    required this.reason,
   });
 }

@@ -6,6 +6,7 @@ import 'package:tugasakhirmobile/constant/color_constant.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AbsenPage extends StatefulWidget {
   const AbsenPage({super.key});
@@ -15,19 +16,27 @@ class AbsenPage extends StatefulWidget {
 }
 
 class _AbsenPageState extends State<AbsenPage> {
+  final keteranganController = TextEditingController();
+
+  @override
+  void dispose() {
+    keteranganController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<AbsenViewModel>(context, listen: false).getCurrentDay();
       Provider.of<AbsenViewModel>(context, listen: false).getAbsen();
-      Provider.of<AuthRepository>(context, listen: false).getRefreshToken();
+      Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var authVm = Provider.of<AuthRepository>(context, listen: false);
+    var authVm = Provider.of<AuthViewModel>(context, listen: false);
     return Consumer<AbsenViewModel>(builder: (context, absenVM, _) {
       return Scaffold(
           body: SafeArea(
@@ -94,15 +103,16 @@ class _AbsenPageState extends State<AbsenPage> {
                                   kelasId: absenVM.absenData[0].kelasId!,
                                   pelajaranId:
                                       absenVM.absenData[0].pelajaranId!,
-                                  keterangan: "ABSEN");
+                                  keterangan: "ABSEN",
+                                  reason: "-");
                               Provider.of<AbsenViewModel>(context,
                                       listen: false)
-                                  .createAbsen(data);
+                                  .createAbsen(context, data);
                             },
                             child: const Text("Absen Sekarang")),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
                       SizedBox(
                         width: Get.width,
@@ -110,7 +120,69 @@ class _AbsenPageState extends State<AbsenPage> {
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 primary: ColorConstant.colorPrimary),
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text("Izin Absen"),
+                                      content: TextFormField(
+                                        controller: keteranganController,
+                                        decoration: const InputDecoration(
+                                            hintText: "Masukkan Alasan"),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("Batal")),
+                                        TextButton(
+                                            onPressed: () {
+                                              var data = CreateAbsen(
+                                                  userId: authVm.dataJwt.id!,
+                                                  guruId: absenVM
+                                                      .absenData[0].guruId!,
+                                                  kelasId: absenVM
+                                                      .absenData[0].kelasId!,
+                                                  pelajaranId: absenVM
+                                                      .absenData[0]
+                                                      .pelajaranId!,
+                                                  keterangan: "IZIN",
+                                                  reason: keteranganController
+                                                      .text);
+                                              Provider.of<AbsenViewModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .createAbsen(context, data);
+                                              keteranganController.clear();
+                                            },
+                                            child: const Text("Kirim"))
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: const Text("Izin Absen")),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        width: Get.width,
+                        height: 50,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                primary: ColorConstant.colorPrimary),
+                            onPressed: () {
+                              Fluttertoast.showToast(
+                                  msg: "Sedang Tahap Pengembangan",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            },
                             child: const Text("Riwayat Absen")),
                       )
                     ]),

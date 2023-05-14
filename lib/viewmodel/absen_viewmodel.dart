@@ -70,7 +70,7 @@ class AbsenViewModel extends ChangeNotifier {
     EasyLoading.dismiss();
   }
 
-  void createAbsen(CreateAbsen absenForm) async {
+  void createAbsen(BuildContext context,CreateAbsen absenForm) async {
     var now = DateTime.now();
 
     Map<String, dynamic> formData = {
@@ -78,7 +78,8 @@ class AbsenViewModel extends ChangeNotifier {
       "guru_id": absenForm.guruId,
       "pelajaran_id": absenForm.pelajaranId,
       "kelas_id": absenForm.kelasId,
-      "keterangan": "ABSEN",
+      "keterangan": absenForm.keterangan,
+      "reason": absenForm.reason,
       "createdAt": DateFormat('yyyy-MM-dd HH:mm:ss').format(now),
     };
     var response = await Dio().post("$urlLink/v1/absen",
@@ -93,6 +94,8 @@ class AbsenViewModel extends ChangeNotifier {
     print(response.data);
     if (response.statusCode == 201 || response.statusCode == 200) {
       EasyLoading.showSuccess("Berhasil Absen");
+
+      Navigator.pop(context);
     } else {
       EasyLoading.showError("Gagal Absen");
     }

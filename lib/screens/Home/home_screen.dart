@@ -19,33 +19,33 @@ class _HomeScreenState extends State<HomeScreen> {
         page: const AbsenPage(),
         name: "Absen",
         iconName: const Icon(Icons.book)),
-    IconBuild(
-        page: const AbsenPage(),
-        name: "Mapel",
-        iconName: const Icon(Icons.my_library_books_sharp)),
-    IconBuild(
-        page: const AbsenPage(),
-        name: "Ebook",
-        iconName: const Icon(Icons.book)),
+    // IconBuild(
+    //     page: const AbsenPage(),
+    //     name: "Mapel",
+    //     iconName: const Icon(Icons.my_library_books_sharp)),
+    // IconBuild(
+    //     page: const AbsenPage(),
+    //     name: "Ebook",
+    //     iconName: const Icon(Icons.book)),
     IconBuild(
         page: const GuruScreen(),
         name: "Guru",
         iconName: const Icon(Icons.people)),
-    IconBuild(
-        page: const AbsenPage(),
-        name: "Nilai",
-        iconName: const Icon(Icons.pending_actions_outlined))
+    // IconBuild(
+    //     page: const AbsenPage(),
+    //     name: "Nilai",
+    //     iconName: const Icon(Icons.pending_actions_outlined))
   ];
 
   @override
   void initState() {
     super.initState();
-    Provider.of<AuthRepository>(context, listen: false).getRefreshToken();
+    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthRepository>(builder: (context, authVM, _) {
+    return Consumer<AuthViewModel>(builder: (context, authVM, _) {
       return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -60,12 +60,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text("Halo, ${authVM.dataJwt.nama}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 16)),
-                    CircleAvatar(
-                        child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.network(
-                          "https://randomuser.me/api/portraits/women/78.jpg"),
-                    ))
+                    InkWell(
+                      onTap: () {
+                        authVM.logout();
+                      },
+                      child: CircleAvatar(
+                          child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.network(
+                            "https://randomuser.me/api/portraits/women/78.jpg"),
+                      )),
+                    )
                   ],
                 )),
             const SizedBox(

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/screens/Home/home_screen.dart';
+import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
@@ -14,7 +15,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => AbsenViewModel()),
-      ChangeNotifierProvider(create: (context) => AuthRepository()),
+      ChangeNotifierProvider(create: (context) => AuthViewModel()),
       ChangeNotifierProvider(create: (context) => GuruViewModel())
     ],
     child: GetMaterialApp(
@@ -58,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
       _checkTimer = Timer(
           const Duration(seconds: 1),
           () => {
-                Get.offAll(() => const HomeScreen()),
+                Get.offAll(() => const BottomBar()),
               });
     }
   }
