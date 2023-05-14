@@ -10,8 +10,10 @@ import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tugasakhirmobile/viewmodel/guru_viewmodel.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => AbsenViewModel()),
@@ -21,6 +23,7 @@ void main() async {
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
+      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
       builder: EasyLoading.init(),
     ),
   ));
