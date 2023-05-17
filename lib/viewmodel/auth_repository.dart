@@ -63,13 +63,38 @@ class AuthViewModel extends ChangeNotifier {
             return status! < 500;
           },
         ));
-    print(response.data);
     if (response.statusCode != 200) {
       Get.dialog(const AlertDialog(
           title: Text("Error"), content: Text("Username or Password Salah")));
     } else {
       await SharedPrefs().setAccessToken(response.data["accessToken"]);
       Get.off(const BottomBar());
+    }
+    notifyListeners();
+  }
+
+  void daftarUser(BuildContext context, String nama, String username,
+      String password) async {
+    Map<String, dynamic> data = {
+      "nama": nama,
+      "username": username,
+      "password": password,
+      "userAgent": "BC"
+    };
+    var response = await Dio().post("$urlLink/v1/sign-up",
+        data: data,
+        options: Options(
+          contentType: Headers.formUrlEncodedContentType,
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ));
+    if (response.statusCode != 200) {
+      Get.dialog(const AlertDialog(
+          title: Text("Error"), content: Text("Gagal Registrasi")));
+    } else {
+      Get.off(const LoginScreen());
     }
     notifyListeners();
   }

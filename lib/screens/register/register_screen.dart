@@ -2,19 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:tugasakhirmobile/screens/register/register_screen.dart';
+import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  final namaController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     usernameController.dispose();
     passwordController.dispose();
+    namaController.dispose();
   }
 
   @override
@@ -75,7 +77,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold))),
                           const SizedBox(height: 30),
-
+                          SizedBox(
+                            height: 40,
+                            child: TextFormField(
+                                textInputAction: TextInputAction.next,
+                                onFieldSubmitted: (_) => FocusScope.of(context)
+                                    .nextFocus(), // focus to next
+                                controller: namaController,
+                                decoration: InputDecoration(
+                                    fillColor: Colors.grey[200],
+                                    filled: true,
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.zero,
+                                    prefixIcon:
+                                        const Icon(Icons.face, size: 15),
+                                    hintText: "Masukkan Nama...",
+                                    border: const OutlineInputBorder())),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           SizedBox(
                             height: 40,
                             child: TextFormField(
@@ -96,10 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const Text("Password"),
-                          const SizedBox(
-                            height: 5,
-                          ),
+
                           SizedBox(
                             height: 40,
                             child: TextFormField(
@@ -128,18 +146,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                         usernameController.text,
                                         passwordController.text);
                                   },
-                                  child: const Text("Masuk"))),
-                          SizedBox(
+                                  child: const Text("Daftar"))),
+                          const SizedBox(
                             height: 10,
                           ),
                           SizedBox(
                               height: 40,
                               width: MediaQuery.of(context).size.width,
-                              child: OutlinedButton(
+                              child: ElevatedButton(
                                   onPressed: () {
-                                    Get.off(RegisterScreen());
+                                    Get.off(LoginScreen());
                                   },
-                                  child: const Text("Daftar"))),
+                                  child: const Text("Sign In"))),
                           const SizedBox(
                             height: 10,
                           )

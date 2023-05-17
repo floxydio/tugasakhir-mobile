@@ -14,6 +14,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String greeting = '';
+
+  String getGreeting() {
+    var hour = DateTime.now().hour;
+    if (hour >= 0 && hour < 12) {
+      return 'Selamat pagi';
+    } else if (hour >= 12 && hour < 15) {
+      return 'Selamat siang';
+    } else if (hour >= 15 && hour < 18) {
+      return 'Selamat sore';
+    } else {
+      return 'Selamat malam';
+    }
+  }
+
   List<IconBuild> iconBuild = [
     IconBuild(
         page: const AbsenPage(),
@@ -41,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
+    greeting = getGreeting();
   }
 
   @override
@@ -67,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Selamat Malam,\n${authVM.dataJwt.nama}",
+                            Text("${greeting},\n${authVM.dataJwt.nama}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
@@ -94,11 +110,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                       color: Color(0xffF1F7B5),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Column(children: [
+                                  child: Column(children: const [
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("Absen Masuk - Juni"),
+                                    Text(
+                                      "Absen Masuk - Juni",
+                                      textAlign: TextAlign.center,
+                                    ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -115,11 +134,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                       color: Color(0xffFD8A8A),
                                       borderRadius: BorderRadius.circular(10)),
-                                  child: Column(children: [
+                                  child: Column(children: const [
                                     SizedBox(
                                       height: 5,
                                     ),
-                                    Text("Total Akumulasi Nilai"),
+                                    Text(
+                                      "Total Akumulasi Nilai",
+                                      textAlign: TextAlign.center,
+                                    ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -195,7 +217,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     );
-                  })
+                  }),
+              const SizedBox(height: 60),
             ],
           )),
         ),
