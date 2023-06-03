@@ -2,7 +2,7 @@
     package="com.example.tugasakhirmobile">
    <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="tugasakhirmobile"
+        android:label="INISS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/absen_model.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
+import 'package:tugasakhirmobile/models/status_absen_model.dart';
 
 class AbsenViewModel extends ChangeNotifier {
   String urlLink = "http://103.174.115.58:3000";
@@ -70,7 +71,35 @@ class AbsenViewModel extends ChangeNotifier {
     EasyLoading.dismiss();
   }
 
-  void createAbsen(BuildContext context,CreateAbsen absenForm) async {
+  List<AbsenDataHistory> absenDataHistory = [];
+
+  void getAbsenData() async {
+    EasyLoading.show(status: 'Loading Get History Absen...');
+
+    absenDataHistory = [];
+
+    var idUser = await SharedPrefs().getIdUser();
+    var month = DateTime.now().month;
+
+    var response = await Dio().get("$urlLink/v1/absen/$idUser/$month",
+        options: Options(
+          headers: {"x-access-token": await SharedPrefs().getAccessToken()},
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ));
+    if (response.statusCode == 200) {
+      absenDataHistory
+          .addAll(StatusAbsen.fromJson(response.data).data!.toList());
+      EasyLoading.dismiss();
+    } else {
+      EasyLoading.showError("Error In Get History Absen");
+    }
+    notifyListeners();
+  }
+
+  void createAbsen(BuildContext context, CreateAbsen absenForm) async {
     var now = DateTime.now();
 
     Map<String, dynamic> formData = {
@@ -80,23 +109,27 @@ class AbsenViewModel extends ChangeNotifier {
       "kelas_id": absenForm.kelasId,
       "keterangan": absenForm.keterangan,
       "reason": absenForm.reason,
-      "createdAt": DateFormat('yyyy-MM-dd HH:mm:ss').format(now),
+      "day": "${now.day}",
+      "month": "${now.month}",
+      "year": "${now.year}",
+      "time": DateFormat.Hms().format(now)
     };
     var response = await Dio().post("$urlLink/v1/absen",
         data: formData,
         options: Options(
+          headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           contentType: Headers.formUrlEncodedContentType,
           followRedirects: false,
           validateStatus: (status) {
             return status! < 500;
           },
         ));
-    print(response.data);
     if (response.statusCode == 201 || response.statusCode == 200) {
       EasyLoading.showSuccess("Berhasil Absen");
 
       Navigator.pop(context);
     } else {
+      print(response.data);
       EasyLoading.showError("Gagal Absen");
     }
   }

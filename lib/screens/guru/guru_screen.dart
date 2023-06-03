@@ -20,67 +20,68 @@ class _GuruScreenState extends State<GuruScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(Icons.arrow_back_ios)),
-                      const Text(
-                        "Daftar Guru",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  Consumer<GuruViewModel>(
-                    builder: (context, guruVM, _) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          physics: const ScrollPhysics(),
-                          itemCount: guruVM.guruData.length,
-                          itemBuilder: (context, i) {
-                            return Card(
-                                elevation: 0.2,
-                                child: ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.black,
-                                    ),
+          child: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back_ios)),
+                    const Text(
+                      "Daftar Guru",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
+                Consumer<GuruViewModel>(
+                  builder: (context, guruVM, _) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: guruVM.guruData.length,
+                        itemBuilder: (context, i) {
+                          return Card(
+                              elevation: 0.2,
+                              child: ListTile(
+                                leading: const CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.black,
                                   ),
-                                  title: Text(guruVM.guruData[i].nama!),
-                                  subtitle: Text(
-                                      "Mengajar : ${guruVM.guruData[i].mengajar!}"),
-                                  trailing: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(guruVM.guruData[i].rating
-                                            .toString())
-                                      ]),
-                                ));
-                          });
-                    },
-                  )
-                ],
-              ))),
+                                ),
+                                title: Text(guruVM.guruData[i].nama!),
+                                subtitle: Text(
+                                    "Mengajar : ${guruVM.guruData[i].mengajar!}"),
+                                trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.star,
+                                        color: Colors.yellow,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(guruVM.guruData[i].rating.toString())
+                                    ]),
+                              ));
+                        });
+                  },
+                )
+              ],
+            )),
+      )),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/models/guru_models.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -13,7 +14,7 @@ class GuruViewModel extends ChangeNotifier {
     EasyLoading.show(status: 'Loading Get Guru...');
     var response = await Dio().get("$urlLink/v1/guru",
         options: Options(
-          
+          headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           followRedirects: false,
           validateStatus: (status) {
             return status! < 500;
@@ -29,5 +30,4 @@ class GuruViewModel extends ChangeNotifier {
     EasyLoading.dismiss();
     notifyListeners();
   }
-
 }

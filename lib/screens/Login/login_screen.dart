@@ -1,4 +1,5 @@
 // Material.dart adalah library yang berisi widget yang sering digunakan
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -52,8 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: SingleChildScrollView(
                           child: Padding(
                     padding: deviceHeight < 600
-                        ? EdgeInsets.only(left: 20, right: 20, bottom: 10)
-                        : EdgeInsets.only(left: 20, right: 20, bottom: 70),
+                        ? const EdgeInsets.only(left: 20, right: 20, bottom: 10)
+                        : const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 70),
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -129,17 +131,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                         passwordController.text);
                                   },
                                   child: const Text("Masuk"))),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          SizedBox(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width,
-                              child: OutlinedButton(
-                                  onPressed: () {
-                                    Get.off(RegisterScreen());
-                                  },
-                                  child: const Text("Daftar"))),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(text: 'Belum Punya Akun? '),
+                                  TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap =
+                                          () => Get.to(const RegisterScreen()),
+                                    text: 'Sign Up',
+                                    style: TextStyle(
+                                        color: Color(0xff84A3CF),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // SizedBox(
+                          //     height: 40,
+                          //     width: MediaQuery.of(context).size.width,
+                          //     child: OutlinedButton(
+                          //         style: OutlinedButton.styleFrom(
+                          //             side: const BorderSide(
+                          //                 width: 1, color: Colors.blueAccent)),
+                          //         onPressed: () {
+                          //           Get.off(const RegisterScreen());
+                          //         },
+                          //         child: const Text("Daftar"))),
                           const SizedBox(
                             height: 10,
                           )

@@ -25,4 +25,14 @@ class SharedPrefs {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setInt('kelas_id', kelasId);
   }
+
+  Future<String> getIdUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('id_user') ?? '';
+  }
+
+  Future<bool> setIdUser(String token) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString('id_user', token);
+  }
 }

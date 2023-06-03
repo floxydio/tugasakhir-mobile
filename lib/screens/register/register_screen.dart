@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:flutter/gestures.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -150,14 +151,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(
                             height: 10,
                           ),
-                          SizedBox(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width,
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    Get.off(LoginScreen());
-                                  },
-                                  child: const Text("Sign In"))),
+                          Center(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(text: 'Sudah Punya Akun? '),
+                                  TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap =
+                                          () => Get.off(const LoginScreen()),
+                                    text: 'Sign In',
+                                    style: TextStyle(
+                                        color: Color(0xff84A3CF),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 10,
                           )

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/jwt_model.dart';
 import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
-import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -29,6 +28,7 @@ class AuthViewModel extends ChangeNotifier {
       if (response.statusCode == 200) {
         dataJwt = JWTModel.fromJson(response.data).data!;
         SharedPrefs().setKelasId(dataJwt.kelasId ?? 0);
+        SharedPrefs().setIdUser(dataJwt.id.toString());
       } else {
         Get.dialog(const AlertDialog(
             title: Text("Error"), content: Text("Token invalid")));
