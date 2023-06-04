@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final double deviceHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        backgroundColor: const Color(0xff84A3CF),
+        backgroundColor: const Color(0xff00448B),
         // bottomNavigationBar:
         body: Form(
           key: _formKey,
@@ -39,10 +39,13 @@ class _LoginScreenState extends State<LoginScreen> {
             fit: StackFit.expand,
             children: [
               Positioned.fill(
+                top: 40,
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Image.asset(
-                    "assets/bg.jpg",
+                    "assets/padlock.png",
+                    width: 300,
+                    height: 300,
                   ),
                 ),
               ),

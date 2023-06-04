@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     IconBuild(
         page: const AbsenPage(),
         name: "Absen",
-        iconName: const Icon(Icons.book)),
+        iconName: Image.asset("assets/absen_icon.png")),
     // IconBuild(
     //     page: const AbsenPage(),
     //     name: "Mapel",
@@ -48,11 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
     IconBuild(
         page: const GuruScreen(),
         name: "Guru",
-        iconName: const Icon(Icons.people)),
-    // IconBuild(
-    //     page: const AbsenPage(),
-    //     name: "Nilai",
-    //     iconName: const Icon(Icons.pending_actions_outlined))
+        iconName: Image.asset("assets/guru_icon.png")),
+    IconBuild(
+        page: const AbsenPage(),
+        name: "Nilai",
+        iconName: const Icon(
+          Icons.library_add,
+          size: 23,
+          color: Color(0xff185FA9),
+        ))
   ];
 
   @override
@@ -80,117 +84,234 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: const Color(0xff00448B),
                   child: Padding(
                       padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 40),
+                          const EdgeInsets.only(left: 20, right: 20, top: 20),
                       child: Column(
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("$greeting,\n${authVM.dataJwt.nama}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: Colors.white)),
-                              InkWell(
-                                onTap: () {
-                                  authVM.logout();
-                                },
-                                child: CircleAvatar(
-                                    child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image.network(
-                                      "https://randomuser.me/api/portraits/women/78.jpg"),
-                                )),
-                              )
-                            ],
-                          ),
                           const SizedBox(
-                            height: 30,
+                            height: 20,
                           ),
-                          Row(children: [
-                            Expanded(
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xffF1F7B5),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Column(children: [
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "Absen Masuk - $month",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              "https://randomuser.me/api/portraits/women/78.jpg",
+                              fit: BoxFit.fill,
+                              width: 100,
+                              height: 100,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text("${greeting},",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: Colors.white)),
+                          Text("${authVM.dataJwt.nama}",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22,
+                                  color: Colors.white)),
+
+                          // Row(
+                          //   mainAxisSize: MainAxisSize.max,
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text("$greeting,\n${authVM.dataJwt.nama}",
+                          //         style: const TextStyle(
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 18,
+                          //             color: Colors.white)),
+                          //     InkWell(
+                          //       onTap: () {
+                          //         authVM.logout();
+                          //       },
+                          //       child: CircleAvatar(
+                          //           child: ClipRRect(
+                          //         borderRadius: BorderRadius.circular(100),
+                          //         child: Image.network(
+                          //             "https://randomuser.me/api/portraits/women/78.jpg"),
+                          //       )),
+                          //     )
+                          //   ],
+                          // ),
+                          // const SizedBox(
+                          //   height: 30,
+                          // ),
+                          // Row(children: [
+                          //   Expanded(
+                          //       child: Container(
+                          //           decoration: BoxDecoration(
+                          //               color: const Color(0xffF1F7B5),
+                          //               borderRadius:
+                          //                   BorderRadius.circular(10)),
+                          //           child: Column(children: [
+                          //             const SizedBox(
+                          //               height: 5,
+                          //             ),
+                          //             Text(
+                          //               "Absen Masuk - $month",
+                          //               textAlign: TextAlign.center,
+                          //             ),
+                          //             const SizedBox(
+                          //               height: 20,
+                          //             ),
+                          //             absenVM.absenDataHistory.isEmpty
+                          //                 ? SizedBox()
+                          //                 : Text(
+                          //                     "${absenVM.absenDataHistory[0].totalAbsen}",
+                          //                     style: const TextStyle(
+                          //                         fontSize: 26)),
+                          //             const SizedBox(
+                          //               height: 10,
+                          //             )
+                          //           ]))),
+                          //   const SizedBox(
+                          //     width: 10,
+                          //   ),
+                          //   Expanded(
+                          //       child: Container(
+                          //           decoration: BoxDecoration(
+                          //               color: const Color(0xffFD8A8A),
+                          //               borderRadius:
+                          //                   BorderRadius.circular(10)),
+                          //           child: Column(children: const [
+                          //             SizedBox(
+                          //               height: 5,
+                          //             ),
+                          //             Text(
+                          //               "Total Akumulasi Nilai",
+                          //               textAlign: TextAlign.center,
+                          //             ),
+                          //             SizedBox(
+                          //               height: 20,
+                          //             ),
+                          //             Text("B", style: TextStyle(fontSize: 26)),
+                          //             SizedBox(
+                          //               height: 10,
+                          //             )
+                          //           ])))
+                          // ])
+                        ],
+                      )),
+                ),
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                    width: Get.width / 1.2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Data Absensi",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Divider(),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Icon(Icons.calendar_month,
+                                      color: Colors.blueAccent),
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text("Total Absen"),
                                       absenVM.absenDataHistory.isEmpty
                                           ? SizedBox()
                                           : Text(
-                                              "${absenVM.absenDataHistory[0].totalAbsen}",
+                                              "${absenVM.absenDataHistory[0].totalAbsen} hari",
                                               style: const TextStyle(
-                                                  fontSize: 26)),
-                                      const SizedBox(
-                                        height: 10,
-                                      )
-                                    ]))),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xffFD8A8A),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Column(children: const [
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "Total Akumulasi Nilai",
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text("B", style: TextStyle(fontSize: 26)),
-                                      SizedBox(
-                                        height: 10,
-                                      )
-                                    ])))
-                          ])
-                        ],
-                      )),
-                ),
-                Container(
-                  transform: Matrix4.translationValues(0.0, -50.0, 0.0),
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      physics: const BouncingScrollPhysics(),
-                      child: Row(
-                        children: [
-                          for (int i = 0; i < 3; i++)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  "assets/slider_dummy.png",
-                                  fit: BoxFit.fill,
-                                  height: 150,
-                                  width: 270,
+                                                  fontSize: 22)),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
+                              Expanded(
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  leading: Icon(Icons.calendar_month,
+                                      color: Colors.redAccent),
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text("Total Alpha"),
+                                      absenVM.absenDataHistory.isEmpty
+                                          ? SizedBox()
+                                          : Text(
+                                              "${absenVM.absenDataHistory[0].totalAlpha} hari",
+                                              style: const TextStyle(
+                                                  fontSize: 22)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 30),
+                Transform(
+                  transform: Matrix4.translationValues(0.0, -30.0, 0.0),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.only(left: 40, right: 40),
+                    title: Text("Riwayat Absensi"),
+                    leading: Image.asset("assets/history_icon.png"),
+                    subtitle: Text("Lihat semua riwayat absensi"),
+                    trailing: Icon(Icons.arrow_right),
+                  ),
+                )
+                // Container(
+                //   transform: Matrix4.translationValues(0.0, -50.0, 0.0),
+                //   padding: const EdgeInsets.only(left: 20.0),
+                //   child: SingleChildScrollView(
+                //       scrollDirection: Axis.horizontal,
+                //       physics: const BouncingScrollPhysics(),
+                //       child: Row(
+                //         children: [
+                //           for (int i = 0; i < 3; i++)
+                //             Padding(
+                //               padding: const EdgeInsets.only(right: 10),
+                //               child: ClipRRect(
+                //                 borderRadius: BorderRadius.circular(10),
+                //                 child: Image.asset(
+                //                   "assets/slider_dummy.png",
+                //                   fit: BoxFit.fill,
+                //                   height: 150,
+                //                   width: 270,
+                //                 ),
+                //               ),
+                //             ),
+                //         ],
+                //       )),
+                // ),
+                // const SizedBox(height: 30),
+                ,
                 GridView.builder(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     shrinkWrap: true,
@@ -210,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                     color: Colors.grey.withOpacity(0.2),

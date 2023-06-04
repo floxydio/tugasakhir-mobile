@@ -11,7 +11,7 @@ class JWTModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -35,11 +35,11 @@ class DataJwt {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['nama'] = this.nama;
-    data['role'] = this.role;
-    data['kelas_id'] = this.kelasId;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['nama'] = nama;
+    data['role'] = role;
+    data['kelas_id'] = kelasId;
     return data;
   }
 }
