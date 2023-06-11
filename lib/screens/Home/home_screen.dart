@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/icon_build.dart';
 import 'package:tugasakhirmobile/constant/intmonth_constant.dart';
+import 'package:tugasakhirmobile/screens/absen/absen_detail.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
 import 'package:tugasakhirmobile/screens/guru/guru_screen.dart';
+import 'package:tugasakhirmobile/screens/nilai/nilai.screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
         name: "Guru",
         iconName: Image.asset("assets/guru_icon.png")),
     IconBuild(
-        page: const AbsenPage(),
+        page: const NilaiScreen(),
         name: "Nilai",
         iconName: const Icon(
           Icons.library_add,
@@ -62,8 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
-    Provider.of<AbsenViewModel>(context, listen: false).getAbsenData();
+    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken().then(
+        (value) => {
+              Provider.of<AbsenViewModel>(context, listen: false).getAbsenData()
+            });
     greeting = getGreeting();
   }
 
@@ -99,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 100,
                             ),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text("${greeting},",
                               style: const TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -202,11 +206,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                         color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
                     transform: Matrix4.translationValues(0.0, -50.0, 0.0),
                     width: Get.width / 1.2,
                     child: Padding(
@@ -214,15 +220,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "Data Absensi",
                             style: TextStyle(fontWeight: FontWeight.w600),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          Divider(),
-                          SizedBox(
+                          const Divider(),
+                          const SizedBox(
                             height: 5,
                           ),
                           Row(
@@ -230,16 +236,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: ListTile(
                                   contentPadding: EdgeInsets.zero,
-                                  leading: Icon(Icons.calendar_month,
+                                  leading: const Icon(Icons.calendar_month,
                                       color: Colors.blueAccent),
                                   title: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Text("Total Absen"),
+                                      const Text("Total Absen"),
                                       absenVM.absenDataHistory.isEmpty
-                                          ? SizedBox()
+                                          ? const SizedBox()
                                           : Text(
                                               "${absenVM.absenDataHistory[0].totalAbsen} hari",
                                               style: const TextStyle(
@@ -251,16 +257,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               Expanded(
                                 child: ListTile(
                                   contentPadding: EdgeInsets.zero,
-                                  leading: Icon(Icons.calendar_month,
+                                  leading: const Icon(Icons.calendar_month,
                                       color: Colors.redAccent),
                                   title: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Text("Total Alpha"),
+                                      const Text("Total Alpha"),
                                       absenVM.absenDataHistory.isEmpty
-                                          ? SizedBox()
+                                          ? const SizedBox()
                                           : Text(
                                               "${absenVM.absenDataHistory[0].totalAlpha} hari",
                                               style: const TextStyle(
@@ -278,12 +284,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Transform(
                   transform: Matrix4.translationValues(0.0, -30.0, 0.0),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.only(left: 40, right: 40),
-                    title: Text("Riwayat Absensi"),
-                    leading: Image.asset("assets/history_icon.png"),
-                    subtitle: Text("Lihat semua riwayat absensi"),
-                    trailing: Icon(Icons.arrow_right),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(AbsenDetail());
+                    },
+                    child: ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(left: 40, right: 40),
+                      title: const Text("Riwayat Absensi"),
+                      leading: Image.asset("assets/history_icon.png"),
+                      subtitle: const Text("Lihat semua riwayat absensi"),
+                      trailing: const Icon(Icons.arrow_right),
+                    ),
                   ),
                 )
                 // Container(

@@ -10,7 +10,7 @@ import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 class AuthViewModel extends ChangeNotifier {
   String urlLink = "http://103.174.115.58:3000";
   DataJwt dataJwt = DataJwt();
-  void getRefreshToken() async {
+  Future<void> getRefreshToken() async {
     EasyLoading.show(status: 'Loading...');
     var response = await Dio().get("$urlLink/v1/refresh-token",
         options: Options(
@@ -48,7 +48,7 @@ class AuthViewModel extends ChangeNotifier {
   }
 
   void logout() {
-    SharedPrefs().clearAccessToken();
+    SharedPrefs().clearAll();
     Get.offAll(const LoginScreen());
   }
 

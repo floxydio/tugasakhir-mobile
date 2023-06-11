@@ -19,7 +19,7 @@ class _BottomBarState extends State<BottomBar> {
     return [
       const HomeScreen(),
       const Center(
-        child: Text("Coming Soon"),
+        child: Text("This Feature Coming Soon"),
       ),
       const Center(
         child: Text("Coming Soon"),

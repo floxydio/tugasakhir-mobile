@@ -16,6 +16,11 @@ class SharedPrefs {
     return prefs.remove('access_token');
   }
 
+  Future<bool> clearAll() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.clear();
+  }
+
   Future<int> getKelasId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt('kelas_id') ?? 0;

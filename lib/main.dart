@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tugasakhirmobile/viewmodel/guru_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tugasakhirmobile/viewmodel/nilai_viewmodel.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,8 @@ Future<void> main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => AbsenViewModel()),
       ChangeNotifierProvider(create: (context) => AuthViewModel()),
-      ChangeNotifierProvider(create: (context) => GuruViewModel())
+      ChangeNotifierProvider(create: (context) => GuruViewModel()),
+      ChangeNotifierProvider(create: (context) => NilaiViewModel())
     ],
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,

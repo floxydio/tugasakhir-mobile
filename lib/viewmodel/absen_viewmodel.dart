@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/absen_model.dart';
+import 'package:tugasakhirmobile/models/absendetail_model.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/models/status_absen_model.dart';
 
@@ -57,12 +58,12 @@ class AbsenViewModel extends ChangeNotifier {
     var kelasId = await SharedPrefs().getKelasId();
     var response = await Dio().get("$urlLink/v1/pelajaran/$getIntDay/$kelasId",
         options: Options(
+          headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           followRedirects: false,
           validateStatus: (status) {
             return status! < 500;
           },
         ));
-    print(response.data);
     if (response.statusCode == 200) {
       absenData.addAll(AbsenModel.fromJson(response.data).data!);
       isLoadingAbsen = false;
@@ -74,7 +75,7 @@ class AbsenViewModel extends ChangeNotifier {
   List<AbsenDataHistory> absenDataHistory = [];
 
   void getAbsenData() async {
-    EasyLoading.show(status: 'Loading Get History Absen...');
+    await EasyLoading.show(status: 'Loading Get History Absen...');
 
     absenDataHistory = [];
 
@@ -89,13 +90,40 @@ class AbsenViewModel extends ChangeNotifier {
             return status! < 500;
           },
         ));
+    print(response.data);
     if (response.statusCode == 200) {
       absenDataHistory
           .addAll(StatusAbsen.fromJson(response.data).data!.toList());
-      EasyLoading.dismiss();
+      await EasyLoading.dismiss();
     } else {
-      EasyLoading.showError("Error In Get History Absen");
+      await EasyLoading.showError("Error In Get History Absen");
     }
+    notifyListeners();
+  }
+
+  List<AbsenDataDetail> absenHistoryDetail = [];
+
+  void getAbsenDetailById() async {
+    absenHistoryDetail.clear();
+    await EasyLoading.show(status: "Tunggu Sebentar...");
+    var idUser = await SharedPrefs().getIdUser();
+    var month = DateTime.now().month;
+    var response = await Dio().get("$urlLink/v1/absen/detail/$idUser/$month",
+        options: Options(
+          headers: {"x-access-token": await SharedPrefs().getAccessToken()},
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ));
+    print(response.data);
+    if (response.statusCode == 200) {
+      absenHistoryDetail
+          .addAll(AbsenDetail.fromJson(response.data).data!.toList());
+    } else {
+      await EasyLoading.showError("Error, Hubungi admin");
+    }
+    await EasyLoading.dismiss();
     notifyListeners();
   }
 
