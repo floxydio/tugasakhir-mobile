@@ -28,9 +28,11 @@ class _AbsenPageState extends State<AbsenPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AbsenViewModel>(context, listen: false).getCurrentDay();
-    Provider.of<AbsenViewModel>(context, listen: false).getAbsen();
-    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<AbsenViewModel>(context, listen: false).getCurrentDay();
+      Provider.of<AbsenViewModel>(context, listen: false).getAbsen();
+      Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
+    });
   }
 
   @override

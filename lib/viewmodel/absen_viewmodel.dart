@@ -46,6 +46,7 @@ class AbsenViewModel extends ChangeNotifier {
     } else if (getDay == "Minggu") {
       getIntDay = 7;
     }
+    print(getIntDay);
     notifyListeners();
   }
 
