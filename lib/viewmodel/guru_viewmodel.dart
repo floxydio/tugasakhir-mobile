@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
-import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/models/guru_models.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class GuruViewModel extends ChangeNotifier {
   List<GuruData> guruData = [];
-  String urlLink = "http://103.174.115.58:3000";
+  String urlLink = dotenv.env["BASE_URL"]!;
 
   void getGuru() async {
     guruData = [];

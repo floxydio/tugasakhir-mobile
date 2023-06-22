@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
@@ -8,7 +9,7 @@ import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 
 class AuthViewModel extends ChangeNotifier {
-  String urlLink = "http://103.174.115.58:3000";
+  String urlLink = dotenv.env["BASE_URL"]!;
   DataJwt dataJwt = DataJwt();
   Future<void> getRefreshToken() async {
     EasyLoading.show(status: 'Loading...');

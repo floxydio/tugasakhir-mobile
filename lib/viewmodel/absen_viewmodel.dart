@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
@@ -9,7 +10,7 @@ import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/models/status_absen_model.dart';
 
 class AbsenViewModel extends ChangeNotifier {
-  String urlLink = "http://103.174.115.58:3000";
+  String urlLink = dotenv.env["BASE_URL"]!;
   String? getDay;
   int? getIntDay;
 
@@ -46,7 +47,6 @@ class AbsenViewModel extends ChangeNotifier {
     } else if (getDay == "Minggu") {
       getIntDay = 7;
     }
-    print(getIntDay);
     notifyListeners();
   }
 
@@ -91,7 +91,6 @@ class AbsenViewModel extends ChangeNotifier {
             return status! < 500;
           },
         ));
-    print(response.data);
     if (response.statusCode == 200) {
       absenDataHistory
           .addAll(StatusAbsen.fromJson(response.data).data!.toList());
@@ -117,7 +116,6 @@ class AbsenViewModel extends ChangeNotifier {
             return status! < 500;
           },
         ));
-    print(response.data);
     if (response.statusCode == 200) {
       absenHistoryDetail
           .addAll(AbsenDetail.fromJson(response.data).data!.toList());
@@ -155,11 +153,8 @@ class AbsenViewModel extends ChangeNotifier {
         ));
     if (response.statusCode == 201 || response.statusCode == 200) {
       EasyLoading.showSuccess("Berhasil Absen");
-
-      Navigator.pop(context);
     } else {
-      print(response.data);
-      EasyLoading.showError("Gagal Absen");
+      EasyLoading.showError(response.data["message"]);
     }
   }
 }

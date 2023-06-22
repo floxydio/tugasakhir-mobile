@@ -55,8 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: SingleChildScrollView(
                           child: Padding(
                     padding: deviceHeight < 600
-                        ? EdgeInsets.only(left: 20, right: 20, bottom: 10)
-                        : EdgeInsets.only(left: 20, right: 20, bottom: 70),
+                        ? const EdgeInsets.only(left: 20, right: 20, bottom: 10)
+                        : const EdgeInsets.only(left: 20, right: 20, bottom: 70),
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -155,13 +155,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Text.rich(
                               TextSpan(
                                 children: [
-                                  TextSpan(text: 'Sudah Punya Akun? '),
+                                  const TextSpan(text: 'Sudah Punya Akun? '),
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
                                       ..onTap =
                                           () => Get.off(const LoginScreen()),
                                     text: 'Sign In',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xff84A3CF),
                                         fontWeight: FontWeight.bold),
                                   ),

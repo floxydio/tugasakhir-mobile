@@ -23,16 +23,16 @@ class _AbsenDetailState extends State<AbsenDetail> {
       builder: (context, absenVm, _) {
         return SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(top: 40, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
             child: Column(
               children: [
-                Center(child: Text("Data Absen")),
-                SizedBox(
+                const Center(child: Text("Data Absen")),
+                const SizedBox(
                   height: 20,
                 ),
                 ListView.builder(
                     shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: absenVm.absenHistoryDetail.length,
                     itemBuilder: (context, index) {
                       var data = absenVm.absenHistoryDetail[index];
@@ -40,7 +40,7 @@ class _AbsenDetailState extends State<AbsenDetail> {
                         child: ListTile(
                           title: Text(
                               "${data.pelajaranNama} - ${data.namaGuru}",
-                              style: TextStyle(fontSize: 14)),
+                              style: const TextStyle(fontSize: 14)),
                           subtitle: Text(
                               "${data.day} - ${data.month} - ${data.year}"),
                           trailing: data.keterangan == "IZIN"
@@ -51,7 +51,7 @@ class _AbsenDetailState extends State<AbsenDetail> {
                                           borderRadius:
                                               BorderRadius.circular(40))),
                                   onPressed: () {},
-                                  child: Text("Izin"))
+                                  child: const Text("Izin"))
                               : ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.greenAccent,
@@ -59,7 +59,7 @@ class _AbsenDetailState extends State<AbsenDetail> {
                                           borderRadius:
                                               BorderRadius.circular(40))),
                                   onPressed: () {},
-                                  child: Text("Absen",
+                                  child: const Text("Absen",
                                       style: TextStyle(color: Colors.black))),
                         ),
                       );

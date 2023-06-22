@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
-import 'package:tugasakhirmobile/screens/Home/home_screen.dart';
 import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
@@ -15,6 +15,7 @@ import 'package:tugasakhirmobile/viewmodel/nilai_viewmodel.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => AbsenViewModel()),
@@ -54,17 +55,16 @@ class _SplashScreenState extends State<SplashScreen> {
     if (token.isEmpty) {
       _checkTimer = Timer(
           const Duration(seconds: 1),
-          () => {
-                Navigator.pushReplacement(
+          () => Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const LoginScreen()))
-              });
+              );
     } else {
       _checkTimer = Timer(
           const Duration(seconds: 1),
-          () => {
-                Get.offAll(() => const BottomBar()),
+          ()  {
+                Get.offAll(() => const BottomBar());
               });
     }
   }

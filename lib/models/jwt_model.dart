@@ -6,11 +6,11 @@ class JWTModel {
 
   JWTModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null ? new DataJwt.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataJwt.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
@@ -35,7 +35,7 @@ class DataJwt {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['nama'] = nama;
     data['role'] = role;

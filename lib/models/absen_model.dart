@@ -10,14 +10,14 @@ class AbsenModel {
     if (json['data'] != null) {
       data = <AbsenData>[];
       json['data'].forEach((v) {
-        data!.add(new AbsenData.fromJson(v));
+        data!.add(AbsenData.fromJson(v));
       });
     }
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();

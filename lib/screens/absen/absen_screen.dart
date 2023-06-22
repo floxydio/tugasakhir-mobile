@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/color_constant.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
 class AbsenPage extends StatefulWidget {
@@ -66,10 +64,10 @@ class _AbsenPageState extends State<AbsenPage> {
               const SizedBox(
                 height: 40,
               ),
-              Align(
+              const Align(
                   alignment: Alignment.center,
                   child: SizedBox(
-                      width: 200, height: 200, child: const AnalogClock())),
+                      width: 200, height: 200, child: AnalogClock())),
               const SizedBox(
                 height: 20,
               ),
@@ -104,7 +102,7 @@ class _AbsenPageState extends State<AbsenPage> {
                           height: 50,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: ColorConstant.colorPrimary),
+                                  backgroundColor: ColorConstant.colorPrimary),
                               onPressed: () {
                                 var data = CreateAbsen(
                                     userId: authVm.dataJwt.id!,
@@ -128,7 +126,7 @@ class _AbsenPageState extends State<AbsenPage> {
                           height: 50,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary: ColorConstant.colorPrimary),
+                                  backgroundColor: ColorConstant.colorPrimary),
                               onPressed: () {
                                 showDialog(
                                     context: context,

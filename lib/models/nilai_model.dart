@@ -17,12 +17,12 @@ class NilaiData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
@@ -34,9 +34,10 @@ class NilaiList {
   int? kelasId;
   int? userId;
   int? semester;
+  String? nama;
 
   NilaiList(
-      {this.id, this.uts, this.uas, this.kelasId, this.userId, this.semester});
+      {this.id, this.uts, this.uas, this.kelasId, this.userId, this.semester,this.nama});
 
   NilaiList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -45,16 +46,18 @@ class NilaiList {
     kelasId = json['kelas_id'];
     userId = json['user_id'];
     semester = json['semester'];
+    nama = json['nama'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['uts'] = this.uts;
-    data['uas'] = this.uas;
-    data['kelas_id'] = this.kelasId;
-    data['user_id'] = this.userId;
-    data['semester'] = this.semester;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['uts'] = uts;
+    data['uas'] = uas;
+    data['kelas_id'] = kelasId;
+    data['user_id'] = userId;
+    data['semester'] = semester;
+    data['nama'] = nama;
     return data;
   }
 }

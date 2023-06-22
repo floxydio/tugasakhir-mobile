@@ -144,13 +144,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text.rich(
                               TextSpan(
                                 children: [
-                                  TextSpan(text: 'Belum Punya Akun? '),
+                                  const TextSpan(text: 'Belum Punya Akun? '),
                                   TextSpan(
                                     recognizer: TapGestureRecognizer()
                                       ..onTap =
                                           () => Get.to(const RegisterScreen()),
                                     text: 'Sign Up',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Color(0xff84A3CF),
                                         fontWeight: FontWeight.bold),
                                   ),
