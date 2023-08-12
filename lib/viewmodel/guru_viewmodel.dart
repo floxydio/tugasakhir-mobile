@@ -12,7 +12,7 @@ class GuruViewModel extends ChangeNotifier {
   void getGuru() async {
     guruData = [];
     EasyLoading.show(status: 'Loading Get Guru...');
-    var response = await Dio().get("$urlLink/v1/guru",
+    var response = await Dio().get("$urlLink/v2/guru",
         options: Options(
           headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           followRedirects: false,

@@ -5,7 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/jwt_model.dart';
+import 'package:tugasakhirmobile/models/profileimage_model.dart';
 import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
+import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 
 class AuthViewModel extends ChangeNotifier {
@@ -13,7 +15,7 @@ class AuthViewModel extends ChangeNotifier {
   DataJwt dataJwt = DataJwt();
   Future<void> getRefreshToken() async {
     EasyLoading.show(status: 'Loading...');
-    var response = await Dio().get("$urlLink/v1/refresh-token",
+    var response = await Dio().get("$urlLink/v2/refresh-token",
         options: Options(
           headers: {
             "x-access-token": await SharedPrefs().getAccessToken(),
@@ -24,7 +26,6 @@ class AuthViewModel extends ChangeNotifier {
             return status! < 500;
           },
         ));
-
     try {
       if (response.statusCode == 200) {
         dataJwt = JWTModel.fromJson(response.data).data!;
@@ -55,7 +56,7 @@ class AuthViewModel extends ChangeNotifier {
 
   void loginUser(BuildContext context, String username, String password) async {
     Map<String, dynamic> data = {"username": username, "password": password};
-    var response = await Dio().post("$urlLink/v1/sign-in",
+    var response = await Dio().post("$urlLink/v2/sign-in",
         data: data,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
@@ -68,8 +69,8 @@ class AuthViewModel extends ChangeNotifier {
       Get.dialog(const AlertDialog(
           title: Text("Error"), content: Text("Username or Password Salah")));
     } else {
-      await SharedPrefs().setAccessToken(response.data["accessToken"]);
-      Get.off(const BottomBar());
+      await SharedPrefs().setAccessToken(response.data["token"]);
+      Get.off(const HomeScreen());
     }
     notifyListeners();
   }
@@ -82,7 +83,7 @@ class AuthViewModel extends ChangeNotifier {
       "password": password,
       "userAgent": "BC"
     };
-    var response = await Dio().post("$urlLink/v1/sign-up",
+    var response = await Dio().post("$urlLink/v2/sign-up",
         data: data,
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
@@ -98,5 +99,38 @@ class AuthViewModel extends ChangeNotifier {
       Get.off(const LoginScreen());
     }
     notifyListeners();
+  }
+
+  String? imageData;
+
+  void profileImage() async {
+    EasyLoading.show(status: 'Loading...');
+    var response = await Dio().get(
+        "$urlLink/v2/profile-image/${await SharedPrefs().getAccessToken()}",
+        options: Options(
+          headers: {
+            "x-access-token": await SharedPrefs().getAccessToken(),
+          },
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ));
+    try {
+      if (response.statusCode == 200) {
+        var resbody = ProfileImage.fromJson(response.data);
+        print(resbody);
+        imageData = resbody.data?.profilePic;
+      }
+    } on DioError catch (e) {
+      if (e.type == DioErrorType.connectionTimeout ||
+          e.type == DioErrorType.connectionError) {
+        EasyLoading.dismiss();
+        Get.dialog(const AlertDialog(
+            title: Text("Error"), content: Text("Connection Timeout")));
+      }
+    }
+    notifyListeners();
+    EasyLoading.dismiss();
   }
 }

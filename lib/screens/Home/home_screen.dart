@@ -41,16 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: () {},
         page: const AbsenPage(),
         name: "Absen",
-        iconName: Image.asset("assets/absen_icon.png")),
-
+        iconName: const Icon(
+          Icons.timelapse,
+          size: 23,
+          color: Color(0xff185FA9),
+        )),
     IconBuild(
         onTap: () {},
         page: const GuruScreen(),
         name: "Guru",
         iconName: Image.asset("assets/guru_icon.png")),
     IconBuild(
-        onTap: () {
-        },
+        onTap: () {},
         page: const NilaiScreen(),
         name: "Nilai",
         iconName: const Icon(
@@ -59,13 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
           color: Color(0xff185FA9),
         )),
     IconBuild(
-        onTap: () {
-          SharedPrefs().clearAll();
-    Get.offAll(const LoginScreen());
-        },
+        onTap: () {},
         page: null,
         name: "Logout",
-        iconName: Icon(
+        iconName: const Icon(
           Icons.logout,
           size: 23,
           color: Color(0xff185FA9),
@@ -79,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         (value) => {
               Provider.of<AbsenViewModel>(context, listen: false).getAbsenData()
             });
+    Provider.of<AuthViewModel>(context, listen: false).profileImage();
     greeting = getGreeting();
   }
 
@@ -99,34 +99,39 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          width: Get.width,
-                          height: 250,
-                          color: const Color(0xff345FB4),
-                          child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20, right: 20, top: 20),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                trailing: ClipRRect(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: Image.network(
-                                    "https://randomuser.me/api/portraits/women/78.jpg",
-                                    fit: BoxFit.fill,
-                                    width: 50,
-                                    height: 50,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  "Class XI-B | Roll no : 04",
-                                ),
-                                title: Text("Hi ${authVM.dataJwt.nama}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 30,
-                                        color: Colors.white)),
-                              )),
-                        ),
+                        authVM.imageData == null && authVM.dataJwt.id == null
+                            ? SizedBox()
+                            : Container(
+                                width: Get.width,
+                                height: 250,
+                                color: const Color(0xff345FB4),
+                                child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20, right: 20, top: 20),
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      trailing: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Image.network(
+                                          authVM.imageData == "default.jpg"
+                                              ? "https://api-ninjas.com/images/cats/abyssinian.jpg"
+                                              : "http://103.174.115.58:4500/img-profile/${authVM.imageData}",
+                                          fit: BoxFit.fill,
+                                          width: 50,
+                                          height: 50,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        "Class XI-B | Roll no : 04",
+                                      ),
+                                      title: Text("Hi ${authVM.dataJwt.nama}",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 30,
+                                              color: Colors.white)),
+                                    )),
+                              ),
                         Padding(
                           padding: const EdgeInsets.only(left: 20.0, right: 20),
                           child: Transform(
@@ -254,9 +259,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
-                                          Get.to(iconBuild[index].page,
-                                              transition:
-                                                  Transition.rightToLeft);
+                                          iconBuild[index].name != "Logout"
+                                              ? Get.to(iconBuild[index].page,
+                                                  transition:
+                                                      Transition.rightToLeft)
+                                              : Provider.of<AuthViewModel>(
+                                                      context,
+                                                      listen: false)
+                                                  .logout();
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(

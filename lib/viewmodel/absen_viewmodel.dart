@@ -57,7 +57,7 @@ class AbsenViewModel extends ChangeNotifier {
     EasyLoading.show(status: 'Loading Get Absen...');
     absenData = [];
     var kelasId = await SharedPrefs().getKelasId();
-    var response = await Dio().get("$urlLink/v1/pelajaran/$getIntDay/$kelasId",
+    var response = await Dio().get("$urlLink/v2/pelajaran/$getIntDay/$kelasId",
         options: Options(
           headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           followRedirects: false,
@@ -83,7 +83,7 @@ class AbsenViewModel extends ChangeNotifier {
     var idUser = await SharedPrefs().getIdUser();
     var month = DateTime.now().month;
 
-    var response = await Dio().get("$urlLink/v1/absen/$idUser/$month",
+    var response = await Dio().get("$urlLink/v2/absen/$idUser/$month",
         options: Options(
           headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           followRedirects: false,
@@ -108,7 +108,7 @@ class AbsenViewModel extends ChangeNotifier {
     await EasyLoading.show(status: "Tunggu Sebentar...");
     var idUser = await SharedPrefs().getIdUser();
     var month = DateTime.now().month;
-    var response = await Dio().get("$urlLink/v1/absen/detail/$idUser/$month",
+    var response = await Dio().get("$urlLink/v2/absen/detail/$idUser/$month",
         options: Options(
           headers: {"x-access-token": await SharedPrefs().getAccessToken()},
           followRedirects: false,
@@ -141,7 +141,7 @@ class AbsenViewModel extends ChangeNotifier {
       "year": "${now.year}",
       "time": DateFormat.Hms().format(now)
     };
-    var response = await Dio().post("$urlLink/v1/absen",
+    var response = await Dio().post("$urlLink/v2/absen",
         data: formData,
         options: Options(
           headers: {"x-access-token": await SharedPrefs().getAccessToken()},

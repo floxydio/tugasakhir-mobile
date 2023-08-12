@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+
+import '../constant/shared_pref.dart';
+import '../screens/login/login_screen.dart';
 
 class NavbarItem {
   List<PersistentBottomNavBarItem> navbarItem(BuildContext context) {
@@ -23,7 +27,9 @@ class NavbarItem {
         icon: const Icon(Icons.logout),
         title: ("Logout"),
         onPressed: (contexts) {
-          Provider.of<AuthViewModel>(context, listen: false).logout();
+          // Provider.of<AuthViewModel>(context, listen: false).logout();
+          SharedPrefs().clearAll();
+          Get.offAll(const LoginScreen());
         },
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,

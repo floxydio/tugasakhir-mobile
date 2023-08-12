@@ -15,7 +15,7 @@ class AbsenModel {
     }
     message = json['message'];
   }
-
+// test 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
@@ -26,7 +26,6 @@ class AbsenModel {
     return data;
   }
 }
-
 class AbsenData {
   int? kelasId;
   int? guruId;

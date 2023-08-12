@@ -48,6 +48,7 @@ dependencies:
   flutter_analog_clock: ^1.0.3
   flutter_dotenv: ^5.1.0
   flutter_keyboard_visibility: ^5.4.1
+  
 
 dev_dependencies:
   flutter_test:
