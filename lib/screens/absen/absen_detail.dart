@@ -12,7 +12,6 @@ class AbsenDetail extends StatefulWidget {
 class _AbsenDetailState extends State<AbsenDetail> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<AbsenViewModel>(context, listen: false).getAbsenDetailById();
   }

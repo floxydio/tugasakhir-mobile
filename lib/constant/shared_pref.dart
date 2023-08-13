@@ -40,4 +40,16 @@ class SharedPrefs {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString('id_user', token);
   }
+
+  Future<bool> setTodayAbsen(int idPelajaran) async {
+    var date = DateTime.now();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('today_absen_${date.day}_$idPelajaran', true);
+  }
+
+  Future<bool?> getAbsenToday(int idPelajaran) async {
+    var date = DateTime.now();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("today_absen_${date.day}_$idPelajaran");
+  }
 }

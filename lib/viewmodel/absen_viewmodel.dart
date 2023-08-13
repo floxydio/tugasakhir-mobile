@@ -8,6 +8,7 @@ import 'package:tugasakhirmobile/models/absen_model.dart';
 import 'package:tugasakhirmobile/models/absendetail_model.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/models/status_absen_model.dart';
+import 'package:tugasakhirmobile/notification/notification_service.dart';
 
 class AbsenViewModel extends ChangeNotifier {
   String urlLink = dotenv.env["BASE_URL"]!;
@@ -57,6 +58,7 @@ class AbsenViewModel extends ChangeNotifier {
     EasyLoading.show(status: 'Loading Get Absen...');
     absenData = [];
     var kelasId = await SharedPrefs().getKelasId();
+
     var response = await Dio().get("$urlLink/v2/pelajaran/$getIntDay/$kelasId",
         options: Options(
           headers: {"x-access-token": await SharedPrefs().getAccessToken()},
@@ -152,7 +154,9 @@ class AbsenViewModel extends ChangeNotifier {
           },
         ));
     if (response.statusCode == 201 || response.statusCode == 200) {
-      EasyLoading.showSuccess("Berhasil Absen");
+      NotificationService().showNotification("Berhasil Absen",
+          "Anda Berhasil Absen Pada ${DateFormat.Hms().format(now)}");
+      SharedPrefs().setTodayAbsen(absenForm.pelajaranId);
     } else {
       EasyLoading.showError(response.data["message"]);
     }

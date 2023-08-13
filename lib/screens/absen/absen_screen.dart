@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/color_constant.dart';
+import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
+import 'package:tugasakhirmobile/notification/notification_service.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
@@ -66,8 +68,8 @@ class _AbsenPageState extends State<AbsenPage> {
               ),
               const Align(
                   alignment: Alignment.center,
-                  child: SizedBox(
-                      width: 200, height: 200, child: AnalogClock())),
+                  child:
+                      SizedBox(width: 200, height: 200, child: AnalogClock())),
               const SizedBox(
                 height: 20,
               ),
@@ -103,7 +105,7 @@ class _AbsenPageState extends State<AbsenPage> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorConstant.colorPrimary),
-                              onPressed: () {
+                              onPressed: () async {
                                 var data = CreateAbsen(
                                     userId: authVm.dataJwt.id!,
                                     guruId: absenVM.absenData[0].guruId!,
@@ -112,9 +114,19 @@ class _AbsenPageState extends State<AbsenPage> {
                                         absenVM.absenData[0].pelajaranId!,
                                     keterangan: "ABSEN",
                                     reason: "-");
-                                Provider.of<AbsenViewModel>(context,
-                                        listen: false)
-                                    .createAbsen(context, data);
+                                var checkAbsen = await SharedPrefs()
+                                    .getAbsenToday(
+                                        absenVM.absenData[0].pelajaranId!);
+                                if (checkAbsen == true) {
+                                  NotificationService().showNotification(
+                                      "Gagal Absen",
+                                      "Anda Sudah Absen Hari Ini");
+                                } else {
+                                  // ignore: use_build_context_synchronously
+                                  Provider.of<AbsenViewModel>(context,
+                                          listen: false)
+                                      .createAbsen(context, data);
+                                }
                               },
                               child: const Text("Absen Sekarang")),
                         ),

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/icon_build.dart';
 import 'package:tugasakhirmobile/constant/intmonth_constant.dart';
-import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_detail.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
 import 'package:tugasakhirmobile/screens/guru/guru_screen.dart';
-import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:tugasakhirmobile/screens/nilai/nilai.screen.dart';
+import 'package:tugasakhirmobile/screens/profile/profile_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+
+import '../../notification/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var month = IntToMonth.monthConverter(DateTime.now().month);
   String greeting = '';
+  String imageNetwork = "";
+  NotificationService notificationService = NotificationService();
 
   String getGreeting() {
     var hour = DateTime.now().hour;
@@ -60,6 +64,18 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 23,
           color: Color(0xff185FA9),
         )),
+    IconBuild(
+      onTap: () {},
+      page: null,
+      name: "Catatan",
+      iconName: const Icon(Icons.note_alt, size: 23, color: Color(0xff185FA9)),
+    ),
+    IconBuild(
+      onTap: () {},
+      page: null,
+      name: "Profile",
+      iconName: const Icon(Icons.person, size: 23, color: Color(0xff185FA9)),
+    ),
     IconBuild(
         onTap: () {},
         page: null,
@@ -100,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         authVM.imageData == null && authVM.dataJwt.id == null
-                            ? SizedBox()
+                            ? const SizedBox()
                             : Container(
                                 width: Get.width,
                                 height: 250,
@@ -122,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 50,
                                         ),
                                       ),
-                                      subtitle: Text(
+                                      subtitle: const Text(
                                         "Class XI-B | Roll no : 04",
                                       ),
                                       title: Text("Hi ${authVM.dataJwt.nama}",
@@ -141,46 +157,55 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Container(
-                                      width: 150,
-                                      height: 190,
-                                      decoration: BoxDecoration(
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color:
-                                                  Colors.grey.withOpacity(0.5),
-                                              spreadRadius: 1,
-                                              blurRadius: 3,
-                                              offset: Offset(0,
-                                                  3), // changes position of shadow
-                                            ),
-                                          ],
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 19.0, top: 22),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Image.asset(
-                                                "assets/ic_attendance.png"),
-                                            Text("80%",
-                                                style: TextStyle(
-                                                    fontSize: 40,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text("ABSEN",
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Color(0xff777777),
-                                                    fontWeight:
-                                                        FontWeight.bold))
-                                          ],
-                                        ),
-                                      )),
+                                  InkWell(
+                                    onTap: () async {
+                                      NotificationService().showNotification(
+                                          "Berhasil Absen",
+                                          "Anda Berhasil Absen Pada ${DateTime.now()}");
+                                 
+                                    },
+                                    child: Container(
+                                        width: 150,
+                                        height: 190,
+                                        decoration: BoxDecoration(
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 1,
+                                                blurRadius: 3,
+                                                offset: const Offset(0,
+                                                    3), // changes position of shadow
+                                              ),
+                                            ],
+                                            color: Colors.white,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10))),
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 19.0, top: 22),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                  "assets/ic_attendance.png"),
+                                              const Text("80%",
+                                                  style: TextStyle(
+                                                      fontSize: 40,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              const Text("ABSEN",
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Color(0xff777777),
+                                                      fontWeight:
+                                                          FontWeight.bold))
+                                            ],
+                                          ),
+                                        )),
+                                  ),
                                   Container(
                                       width: 140,
                                       height: 190,
@@ -191,12 +216,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Colors.grey.withOpacity(0.5),
                                               spreadRadius: 1,
                                               blurRadius: 3,
-                                              offset: Offset(0,
+                                              offset: const Offset(0,
                                                   3), // changes position of shadow
                                             ),
                                           ],
                                           color: Colors.white,
-                                          borderRadius: BorderRadius.all(
+                                          borderRadius: const BorderRadius.all(
                                               Radius.circular(10))),
                                       child: Padding(
                                         padding: const EdgeInsets.only(
@@ -207,12 +232,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Image.asset(
                                                 "assets/ic_fees_due.png"),
-                                            Text("A",
+                                            const Text("A",
                                                 style: TextStyle(
                                                     fontSize: 40,
                                                     fontWeight:
                                                         FontWeight.bold)),
-                                            Text("Grade",
+                                            const Text("Grade",
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Color(0xff777777),
@@ -231,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Get.to(AbsenDetail());
+                                    Get.to(const AbsenDetail());
                                   },
                                   child: ListTile(
                                     contentPadding: const EdgeInsets.only(
@@ -259,14 +284,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
-                                          iconBuild[index].name != "Logout"
+                                          print(iconBuild[index].name);
+                                          iconBuild[index].name != "Logout" &&
+                                                  iconBuild[index].name !=
+                                                      "Profile"
                                               ? Get.to(iconBuild[index].page,
                                                   transition:
                                                       Transition.rightToLeft)
-                                              : Provider.of<AuthViewModel>(
-                                                      context,
-                                                      listen: false)
-                                                  .logout();
+                                              : iconBuild[index].name ==
+                                                      "Profile"
+                                                  ? Get.to(ProfilePage(
+                                                      imageNetwork:
+                                                          authVM.imageData!))
+                                                  : Provider.of<AuthViewModel>(
+                                                          context,
+                                                          listen: false)
+                                                      .logout();
                                         },
                                         child: Container(
                                           decoration: BoxDecoration(
