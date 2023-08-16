@@ -8,13 +8,14 @@ import 'package:tugasakhirmobile/firebase_options.dart';
 import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
 import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
-import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tugasakhirmobile/viewmodel/guru_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugasakhirmobile/viewmodel/nilai_viewmodel.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

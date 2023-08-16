@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';
-import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -185,8 +185,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           passwordController.text.isNotEmpty &&
                                           retypePasswordController
                                               .text.isNotEmpty) {
-                                        authViewModel.loginUser(
-                                            context,
+                                        authViewModel.signInUser(
                                             usernameController.text,
                                             passwordController.text);
                                       } else if (usernameController

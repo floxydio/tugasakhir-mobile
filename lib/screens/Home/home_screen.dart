@@ -10,7 +10,7 @@ import 'package:tugasakhirmobile/screens/guru/guru_screen.dart';
 import 'package:tugasakhirmobile/screens/nilai/nilai.screen.dart';
 import 'package:tugasakhirmobile/screens/profile/profile_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
-import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 
 import '../../notification/notification_service.dart';
 
@@ -90,11 +90,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken().then(
-        (value) => {
-              Provider.of<AbsenViewModel>(context, listen: false).getAbsenData()
-            });
+    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
     Provider.of<AuthViewModel>(context, listen: false).profileImage();
+    Provider.of<AbsenViewModel>(context, listen: false).getAbsenData();
     greeting = getGreeting();
   }
 
@@ -115,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        authVM.imageData == null && authVM.dataJwt.id == null
+                        authVM.imageData == null && authVM.dataJwt!.id == null
                             ? const SizedBox()
                             : Container(
                                 width: Get.width,
@@ -141,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       subtitle: const Text(
                                         "Class XI-B | Roll no : 04",
                                       ),
-                                      title: Text("Hi ${authVM.dataJwt.nama}",
+                                      title: Text("Hi ${authVM.dataJwt!.nama}",
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 30,
@@ -162,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       NotificationService().showNotification(
                                           "Berhasil Absen",
                                           "Anda Berhasil Absen Pada ${DateTime.now()}");
-                                 
                                     },
                                     child: Container(
                                         width: 150,

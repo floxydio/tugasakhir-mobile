@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/screens/register/register_screen.dart';
-import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -131,8 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Color(0xff345FB4)),
                                     onPressed: () {
-                                      authViewModel.loginUser(
-                                          context,
+                                      authViewModel.signInUser(
                                           usernameController.text,
                                           passwordController.text);
                                     },

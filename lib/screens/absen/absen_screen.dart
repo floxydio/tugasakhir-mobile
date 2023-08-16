@@ -6,7 +6,7 @@ import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
 import 'package:tugasakhirmobile/notification/notification_service.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
-import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
 class AbsenPage extends StatefulWidget {
@@ -107,7 +107,7 @@ class _AbsenPageState extends State<AbsenPage> {
                                   backgroundColor: ColorConstant.colorPrimary),
                               onPressed: () async {
                                 var data = CreateAbsen(
-                                    userId: authVm.dataJwt.id!,
+                                    userId: authVm.dataJwt!.id!,
                                     guruId: absenVM.absenData[0].guruId!,
                                     kelasId: absenVM.absenData[0].kelasId!,
                                     pelajaranId:
@@ -159,7 +159,7 @@ class _AbsenPageState extends State<AbsenPage> {
                                           TextButton(
                                               onPressed: () {
                                                 var data = CreateAbsen(
-                                                    userId: authVm.dataJwt.id!,
+                                                    userId: authVm.dataJwt!.id!,
                                                     guruId: absenVM
                                                         .absenData[0].guruId!,
                                                     kelasId: absenVM
