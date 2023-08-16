@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/error_either.dart';
 import 'package:tugasakhirmobile/models/nilai_model.dart';
@@ -16,6 +17,8 @@ class NilaiRepository implements NilaiService {
   @override
   Future<Either<ErrorEither, NilaiData>> getNilaiBySemester(
       int semester) async {
+    dio.interceptors.add(PrettyDioLogger());
+
     try {
       var response =
           await Dio().get("$urlLink/v2/nilai?id=$id&semester=$semester",

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/error_either.dart';
 import 'package:tugasakhirmobile/models/jwt_model.dart';
@@ -20,6 +21,8 @@ class AuthRepository implements AuthService {
 
   @override
   Future<Either<ErrorEither, DataJwt>> getRefreshToken() async {
+    dio.interceptors.add(PrettyDioLogger());
+
     try {
       var response = await dio.get("$urlLink/v2/refresh-token",
           options: Options(
@@ -45,6 +48,8 @@ class AuthRepository implements AuthService {
   @override
   Future<Either<ErrorEither, LoginModel>> signIn(
       String username, String password) async {
+    dio.interceptors.add(PrettyDioLogger());
+
     Map<String, dynamic> data = {"username": username, "password": password};
 
     try {
@@ -69,6 +74,8 @@ class AuthRepository implements AuthService {
 
   @override
   Future<Either<ErrorEither, ProfileImage>> imageProfile() async {
+    dio.interceptors.add(PrettyDioLogger());
+
     try {
       var response = await dio.get(
           "$urlLink/v2/profile-image/${await SharedPrefs().getAccessToken()}",
