@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/icon_build.dart';
@@ -281,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
-                                          print(iconBuild[index].name);
+                                       
                                           iconBuild[index].name != "Logout" &&
                                                   iconBuild[index].name !=
                                                       "Profile"

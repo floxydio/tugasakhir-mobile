@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/firebase_options.dart';
-import 'package:tugasakhirmobile/screens/bottombar/bottombar.dart';
 import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
@@ -85,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Center(
             child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(100)),
+                borderRadius: const BorderRadius.all(Radius.circular(100)),
                 child: Image.asset(
                   "assets/splash.png",
                   width: 250,

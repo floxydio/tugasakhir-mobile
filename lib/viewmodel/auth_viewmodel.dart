@@ -1,11 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/jwt_model.dart';
-import 'package:tugasakhirmobile/models/profileimage_model.dart';
 import 'package:tugasakhirmobile/repository/auth.repo.dart';
 import 'package:tugasakhirmobile/screens/home/home_screen.dart';
 import 'package:tugasakhirmobile/screens/login/login_screen.dart';

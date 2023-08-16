@@ -11,7 +11,7 @@ class AbsenDetail {
     if (json['data'] != null) {
       data = <AbsenDataDetail>[];
       json['data'].forEach((v) {
-        data!.add(new AbsenDataDetail.fromJson(v));
+        data!.add( AbsenDataDetail.fromJson(v));
       });
     }
   }

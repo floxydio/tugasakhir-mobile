@@ -13,13 +13,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
         child: SizedBox(
           height: 50,
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Color(0xff185FA9)),
+            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xff185FA9)),
             onPressed: () {},
-            child: Text("Submit Edit"),
+            child: const Text("Submit Edit"),
           ),
         ),
       ),
@@ -42,13 +42,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 150,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               TextFormField(
-                decoration: InputDecoration(hintText: "Nama"),
+                decoration: const InputDecoration(hintText: "Nama"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],

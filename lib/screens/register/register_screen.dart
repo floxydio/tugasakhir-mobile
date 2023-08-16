@@ -48,12 +48,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: InkWell(
                           onTap: () {
                             Get.back();
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.arrow_left_outlined,
                             color: Colors.white,
                             size: 40,

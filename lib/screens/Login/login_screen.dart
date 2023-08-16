@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: Color(0xff345FB4)),
+                                        backgroundColor: const Color(0xff345FB4)),
                                     onPressed: () {
                                       authViewModel.signInUser(
                                           usernameController.text,
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 KeyboardVisibilityBuilder(builder: (context, visible) {
                   if (visible) {
-                    return SizedBox();
+                    return const SizedBox();
                   } else {
                     return Positioned.fill(
                       top: 0,

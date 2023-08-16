@@ -10,7 +10,7 @@ class NilaiData {
     if (json['data'] != null) {
       data = <NilaiList>[];
       json['data'].forEach((v) {
-        data!.add(new NilaiList.fromJson(v));
+        data!.add( NilaiList.fromJson(v));
       });
     }
     message = json['message'];

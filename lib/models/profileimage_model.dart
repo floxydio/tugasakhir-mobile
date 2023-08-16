@@ -8,18 +8,18 @@ class ProfileImage {
   ProfileImage.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null
-        ? new ProfileImageData.fromJson(json['data'])
+        ? ProfileImageData.fromJson(json['data'])
         : null;
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['status'] = status;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
@@ -34,8 +34,8 @@ class ProfileImageData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['profile_pic'] = this.profilePic;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['profile_pic'] = profilePic;
     return data;
   }
 }
