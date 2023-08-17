@@ -125,7 +125,7 @@ class _AbsenPageState extends State<AbsenPage> {
                                   // ignore: use_build_context_synchronously
                                   Provider.of<AbsenViewModel>(context,
                                           listen: false)
-                                      .createAbsen(context, data);
+                                      .createAbsen(data);
                                 }
                               },
                               child: const Text("Absen Sekarang")),
@@ -173,7 +173,7 @@ class _AbsenPageState extends State<AbsenPage> {
                                                 Provider.of<AbsenViewModel>(
                                                         context,
                                                         listen: false)
-                                                    .createAbsen(context, data);
+                                                    .createAbsen(data);
                                                 keteranganController.clear();
                                               },
                                               child: const Text("Kirim"))

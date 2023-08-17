@@ -18,7 +18,7 @@ class NilaiRepository implements NilaiService {
   Future<Either<ErrorEither, NilaiData>> getNilaiBySemester(
       int semester) async {
     dio.interceptors.add(PrettyDioLogger());
-
+    var id = await SharedPrefs().getIdUser();
     try {
       var response =
           await Dio().get("$urlLink/v2/nilai?id=$id&semester=$semester",

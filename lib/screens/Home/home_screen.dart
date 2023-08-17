@@ -5,7 +5,6 @@ import 'package:tugasakhirmobile/constant/icon_build.dart';
 import 'package:tugasakhirmobile/constant/intmonth_constant.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_detail.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
-import 'package:tugasakhirmobile/screens/guru/guru_screen.dart';
 import 'package:tugasakhirmobile/screens/nilai/nilai.screen.dart';
 import 'package:tugasakhirmobile/screens/profile/profile_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
@@ -49,11 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 23,
           color: Color(0xff185FA9),
         )),
-    IconBuild(
-        onTap: () {},
-        page: const GuruScreen(),
-        name: "Guru",
-        iconName: Image.asset("assets/guru_icon.png")),
+    // IconBuild(
+    //     onTap: () {},
+    //     page: const GuruScreen(),
+    //     name: "Guru",
+    //     iconName: Image.asset("assets/guru_icon.png")),
     IconBuild(
         onTap: () {},
         page: const NilaiScreen(),
@@ -112,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        authVM.imageData == null && authVM.dataJwt!.id == null
+                        authVM.imageData == null && authVM.dataJwt == null
                             ? const SizedBox()
                             : Container(
                                 width: Get.width,
@@ -280,7 +279,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
-                                       
                                           iconBuild[index].name != "Logout" &&
                                                   iconBuild[index].name !=
                                                       "Profile"

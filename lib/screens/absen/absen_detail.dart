@@ -22,10 +22,26 @@ class _AbsenDetailState extends State<AbsenDetail> {
       builder: (context, absenVm, _) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               children: [
-                const Center(child: Text("Data Absen")),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back_ios)),
+                    const Text(
+                      "History Absen",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
                 const SizedBox(
                   height: 20,
                 ),
