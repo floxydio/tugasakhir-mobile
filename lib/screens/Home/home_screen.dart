@@ -7,6 +7,7 @@ import 'package:tugasakhirmobile/screens/absen/absen_detail.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
 import 'package:tugasakhirmobile/screens/nilai/nilai.screen.dart';
 import 'package:tugasakhirmobile/screens/profile/profile_screen.dart';
+import 'package:tugasakhirmobile/screens/ujian/ujian_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 
@@ -55,6 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
     //     iconName: Image.asset("assets/guru_icon.png")),
     IconBuild(
         onTap: () {},
+        page: const ExamScreen(),
+        name: "Ujian",
+        iconName: const Icon(
+          Icons.menu_book_rounded,
+          size: 23,
+          color: Color(0xff185FA9),
+        )),
+    IconBuild(
+        onTap: () {},
         page: const NilaiScreen(),
         name: "Nilai",
         iconName: const Icon(
@@ -82,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Icons.logout,
           size: 23,
           color: Color(0xff185FA9),
-        ))
+        )),
   ];
 
   @override

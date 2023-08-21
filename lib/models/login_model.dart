@@ -2,6 +2,7 @@ class LoginModel {
   int? status;
   String? token;
   String? message;
+  int? role;
 
   LoginModel({this.status, this.token, this.message});
 
@@ -9,6 +10,7 @@ class LoginModel {
     status = json['status'];
     token = json['token'];
     message = json['message'];
+    role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
@@ -16,6 +18,7 @@ class LoginModel {
     data['status'] = status;
     data['token'] = token;
     data['message'] = message;
+    data['role'] = role;
     return data;
   }
 }

@@ -14,8 +14,9 @@ class AuthViewModel extends ChangeNotifier {
     var tokenRepository = await AuthRepository().getRefreshToken();
     tokenRepository.fold((l) {
       EasyLoading.showError(l.message!);
-    }, (r) {
+    }, (r) async {
       dataJwt = r;
+      await SharedPrefs().setKelasId(r.kelasId!);
     });
     EasyLoading.dismiss();
     notifyListeners();
@@ -75,6 +76,9 @@ class AuthViewModel extends ChangeNotifier {
 
     authRepo.fold((l) {
       EasyLoading.showError(l.message!);
+      if (l.message == "User Unauthorized") {
+        logout();
+      }
     }, (r) => {imageData = r.data?.profilePic});
 
     EasyLoading.dismiss();
