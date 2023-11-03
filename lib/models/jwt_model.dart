@@ -4,6 +4,7 @@ class JWTModel {
 
   JWTModel({this.status, this.data});
 
+  // ignore: prefer_final_parameters
   JWTModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null ? DataJwt.fromJson(json['data']) : null;
@@ -27,7 +28,7 @@ class DataJwt {
 
   DataJwt({this.id, this.nama, this.role});
 
-  DataJwt.fromJson(Map<String, dynamic> json) {
+  DataJwt.fromJson(final Map<String, dynamic> json) {
     id = json['id'];
     nama = json['nama'];
     role = json['role'];

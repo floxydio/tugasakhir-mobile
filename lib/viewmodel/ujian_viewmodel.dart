@@ -16,10 +16,10 @@ class UjianViewModel extends ChangeNotifier {
   void getUjianByKelas() async {
     dataUjian = [];
 
-    var ujianRepository = await UjianRepository().getDataUjian();
+    final ujianRepository = await UjianRepository().getDataUjian();
 
-    ujianRepository.fold((l) => {EasyLoading.showError(l.message!)},
-        (r) => {dataUjian.addAll(r.data!.dataUjian!.toList())});
+    ujianRepository.fold((final l) => {EasyLoading.showError(l.message!)},
+        (final r) => {dataUjian.addAll(r.data!.dataUjian!.toList())});
 
     EasyLoading.dismiss();
     notifyListeners();

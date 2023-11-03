@@ -5,11 +5,10 @@ class ProfileImage {
 
   ProfileImage({this.status, this.data, this.message});
 
-  ProfileImage.fromJson(Map<String, dynamic> json) {
+  ProfileImage.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
-    data = json['data'] != null
-        ? ProfileImageData.fromJson(json['data'])
-        : null;
+    data =
+        json['data'] != null ? ProfileImageData.fromJson(json['data']) : null;
     message = json['message'];
   }
 
@@ -29,7 +28,7 @@ class ProfileImageData {
 
   ProfileImageData({this.profilePic});
 
-  ProfileImageData.fromJson(Map<String, dynamic> json) {
+  ProfileImageData.fromJson(final Map<String, dynamic> json) {
     profilePic = json['profile_pic'];
   }
 

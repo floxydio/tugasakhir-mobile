@@ -17,9 +17,9 @@ class _AbsenDetailState extends State<AbsenDetail> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(body: SafeArea(child: Consumer<AbsenViewModel>(
-      builder: (context, absenVm, _) {
+      builder: (final context, final absenVm, final _) {
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -49,8 +49,8 @@ class _AbsenDetailState extends State<AbsenDetail> {
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemCount: absenVm.absenHistoryDetail.length,
-                    itemBuilder: (context, index) {
-                      var data = absenVm.absenHistoryDetail[index];
+                    itemBuilder: (final context, final index) {
+                      final data = absenVm.absenHistoryDetail[index];
                       return Card(
                         child: ListTile(
                           title: Text(

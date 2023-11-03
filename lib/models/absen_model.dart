@@ -5,27 +5,28 @@ class AbsenModel {
 
   AbsenModel({this.status, this.data, this.message});
 
-  AbsenModel.fromJson(Map<String, dynamic> json) {
+  AbsenModel.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <AbsenData>[];
-      json['data'].forEach((v) {
+      json['data'].forEach((final v) {
         data!.add(AbsenData.fromJson(v));
       });
     }
     message = json['message'];
   }
-// test 
+// test
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((final v) => v.toJson()).toList();
     }
     data['message'] = message;
     return data;
   }
 }
+
 class AbsenData {
   int? kelasId;
   int? guruId;
@@ -42,7 +43,7 @@ class AbsenData {
       this.guru,
       this.kelasNomor});
 
-  AbsenData.fromJson(Map<String, dynamic> json) {
+  AbsenData.fromJson(final Map<String, dynamic> json) {
     kelasId = json["kelas_id"];
     guruId = json["guru_id"];
     pelajaranId = json["pelajaran_id"];

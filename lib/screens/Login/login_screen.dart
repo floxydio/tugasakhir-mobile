@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
 
     return KeyboardDismissOnTap(
@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 40,
                               child: TextFormField(
                                   textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) =>
+                                  onFieldSubmitted: (final _) =>
                                       FocusScope.of(context)
                                           .nextFocus(), // focus to next
                                   controller: usernameController,
@@ -129,11 +129,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color(0xff345FB4)),
+                                        backgroundColor:
+                                            const Color(0xff345FB4)),
                                     onPressed: () {
                                       authViewModel.signInUser(
-                                          usernameController.text,
-                                          passwordController.text);
+                                          usernameController.text
+                                              .replaceAll(" ", ""),
+                                          passwordController.text
+                                              .replaceAll(" ", ""));
                                     },
                                     child: const Text("Sign In"))),
                             const SizedBox(
@@ -169,7 +172,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ))),
                   ),
                 ),
-                KeyboardVisibilityBuilder(builder: (context, visible) {
+                KeyboardVisibilityBuilder(builder: (final context, final visible) {
                   if (visible) {
                     return const SizedBox();
                   } else {

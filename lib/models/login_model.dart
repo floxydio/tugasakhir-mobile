@@ -6,7 +6,7 @@ class LoginModel {
 
   LoginModel({this.status, this.token, this.message});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
+  LoginModel.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     token = json['token'];
     message = json['message'];

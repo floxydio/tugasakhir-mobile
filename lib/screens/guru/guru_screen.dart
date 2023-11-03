@@ -17,7 +17,7 @@ class _GuruScreenState extends State<GuruScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
@@ -44,12 +44,12 @@ class _GuruScreenState extends State<GuruScreen> {
                   ],
                 ),
                 Consumer<GuruViewModel>(
-                  builder: (context, guruVM, _) {
+                  builder: (final context, final guruVM, final _) {
                     return ListView.builder(
                         shrinkWrap: true,
                         physics: const ScrollPhysics(),
                         itemCount: guruVM.guruData.length,
-                        itemBuilder: (context, i) {
+                        itemBuilder: (final context, final i) {
                           return Card(
                               elevation: 0.2,
                               child: ListTile(

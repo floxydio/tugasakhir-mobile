@@ -11,10 +11,10 @@ class AuthViewModel extends ChangeNotifier {
   DataJwt? dataJwt;
   void getRefreshToken() async {
     EasyLoading.show(status: 'Loading...');
-    var tokenRepository = await AuthRepository().getRefreshToken();
-    tokenRepository.fold((l) {
+    final tokenRepository = await AuthRepository().getRefreshToken();
+    tokenRepository.fold((final l) {
       EasyLoading.showError(l.message!);
-    }, (r) async {
+    }, (final r) async {
       dataJwt = r;
       await SharedPrefs().setKelasId(r.kelasId!);
     });
@@ -27,13 +27,13 @@ class AuthViewModel extends ChangeNotifier {
     Get.offAll(const LoginScreen());
   }
 
-  void signInUser(String username, String password) async {
+  void signInUser(final String username, final String password) async {
     EasyLoading.show(status: 'Loading...');
-    var authRepository = await AuthRepository().signIn(username, password);
+    final authRepository = await AuthRepository().signIn(username, password);
 
-    authRepository.fold((l) {
+    authRepository.fold((final l) {
       EasyLoading.showError(l.message!);
-    }, (r) async {
+    }, (final r) async {
       await SharedPrefs().setAccessToken(r.token!);
       Get.off(const HomeScreen());
     });
@@ -72,14 +72,14 @@ class AuthViewModel extends ChangeNotifier {
 
   void profileImage() async {
     EasyLoading.show(status: 'Loading...');
-    var authRepo = await AuthRepository().imageProfile();
+    final authRepo = await AuthRepository().imageProfile();
 
-    authRepo.fold((l) {
+    authRepo.fold((final l) {
       EasyLoading.showError(l.message!);
       if (l.message == "User Unauthorized") {
         logout();
       }
-    }, (r) => {imageData = r.data?.profilePic});
+    }, (final r) => {imageData = r.data?.profilePic});
 
     EasyLoading.dismiss();
     notifyListeners();

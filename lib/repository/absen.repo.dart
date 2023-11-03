@@ -11,10 +11,11 @@ import 'package:tugasakhirmobile/models/status_absen_model.dart';
 import 'package:intl/intl.dart';
 
 abstract class AbsenService {
-  Future<Either<ErrorEither, AbsenModel>> findAbsen(int getDay, int kelasId);
+  Future<Either<ErrorEither, AbsenModel>> findAbsen(
+      final int getDay, final int kelasId);
   Future<Either<ErrorEither, StatusAbsen>> statusAbsenData();
   Future<Either<ErrorEither, AbsenDetail>> absenDetail();
-  Future<Either<ErrorEither, String>> createAbsen(CreateAbsen form);
+  Future<Either<ErrorEither, String>> createAbsen(final CreateAbsen form);
 }
 
 class AbsenRepository implements AbsenService {
@@ -23,15 +24,15 @@ class AbsenRepository implements AbsenService {
 
   @override
   Future<Either<ErrorEither, AbsenModel>> findAbsen(
-      int getDay, int kelasId) async {
+      final int getDay, final int kelasId) async {
     dio.interceptors.add(PrettyDioLogger());
 
     try {
-      var response = await Dio().get("$urlLink/v2/pelajaran/$getDay/$kelasId",
+      final response = await Dio().get("$urlLink/v2/pelajaran/$getDay/$kelasId",
           options: Options(
             headers: {"x-access-token": await SharedPrefs().getAccessToken()},
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));
@@ -49,14 +50,14 @@ class AbsenRepository implements AbsenService {
   Future<Either<ErrorEither, StatusAbsen>> statusAbsenData() async {
     dio.interceptors.add(PrettyDioLogger());
 
-    var idUser = await SharedPrefs().getIdUser();
-    var month = DateTime.now().month;
+    final idUser = await SharedPrefs().getIdUser();
+    final month = DateTime.now().month;
     try {
-      var response = await Dio().get("$urlLink/v2/absen/$idUser/$month",
+      final response = await Dio().get("$urlLink/v2/absen/$idUser/$month",
           options: Options(
             headers: {"x-access-token": await SharedPrefs().getAccessToken()},
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));
@@ -73,15 +74,15 @@ class AbsenRepository implements AbsenService {
   @override
   Future<Either<ErrorEither, AbsenDetail>> absenDetail() async {
     dio.interceptors.add(PrettyDioLogger());
-    var idUser = await SharedPrefs().getIdUser();
-    var month = DateTime.now().month;
+    final idUser = await SharedPrefs().getIdUser();
+    final month = DateTime.now().month;
 
     try {
-      var response = await dio.get("$urlLink/v2/absen/detail/$idUser/$month",
+      final response = await dio.get("$urlLink/v2/absen/detail/$idUser/$month",
           options: Options(
             headers: {"x-access-token": await SharedPrefs().getAccessToken()},
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));
@@ -96,11 +97,12 @@ class AbsenRepository implements AbsenService {
   }
 
   @override
-  Future<Either<ErrorEither, String>> createAbsen(CreateAbsen form) async {
+  Future<Either<ErrorEither, String>> createAbsen(
+      final CreateAbsen form) async {
     dio.interceptors.add(PrettyDioLogger());
-    var now = DateTime.now();
+    final now = DateTime.now();
 
-    Map<String, dynamic> formData = {
+    final Map<String, dynamic> formData = {
       "user_id": form.userId,
       "guru_id": form.guruId,
       "pelajaran_id": form.pelajaranId,
@@ -113,13 +115,13 @@ class AbsenRepository implements AbsenService {
       "time": DateFormat.Hms().format(now)
     };
     try {
-      var response = await Dio().post("$urlLink/v2/absen",
+      final response = await Dio().post("$urlLink/v2/absen",
           data: formData,
           options: Options(
             headers: {"x-access-token": await SharedPrefs().getAccessToken()},
             contentType: Headers.formUrlEncodedContentType,
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));

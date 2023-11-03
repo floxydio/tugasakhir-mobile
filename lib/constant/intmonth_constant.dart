@@ -1,5 +1,5 @@
 class IntToMonth {
-  static String monthConverter(int month) {
+  static String monthConverter(final int month) {
     if (month < 1 || month > 12) {
       throw Exception('Invalid month value');
     }

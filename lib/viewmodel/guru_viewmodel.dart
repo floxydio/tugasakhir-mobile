@@ -8,11 +8,11 @@ class GuruViewModel extends ChangeNotifier {
   void getGuru() async {
     guruData = [];
     EasyLoading.show(status: 'Loading Get Guru...');
-    var guruRepo = await GuruRepository().getDataGuru();
+    final guruRepo = await GuruRepository().getDataGuru();
 
-    guruRepo.fold((l) {
+    guruRepo.fold((final l) {
       EasyLoading.showError(l.message!);
-    }, (r) {
+    }, (final r) {
       guruData.addAll(r.data!.toList());
     });
     EasyLoading.dismiss();

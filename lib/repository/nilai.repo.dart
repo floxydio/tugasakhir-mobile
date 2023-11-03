@@ -7,7 +7,7 @@ import 'package:tugasakhirmobile/models/error_either.dart';
 import 'package:tugasakhirmobile/models/nilai_model.dart';
 
 abstract class NilaiService {
-  Future<Either<ErrorEither, NilaiData>> getNilaiBySemester(int semester);
+  Future<Either<ErrorEither, NilaiData>> getNilaiBySemester(final int semester);
 }
 
 class NilaiRepository implements NilaiService {
@@ -16,18 +16,18 @@ class NilaiRepository implements NilaiService {
 
   @override
   Future<Either<ErrorEither, NilaiData>> getNilaiBySemester(
-      int semester) async {
+      final int semester) async {
     dio.interceptors.add(PrettyDioLogger());
-    var id = await SharedPrefs().getIdUser();
+    final id = await SharedPrefs().getIdUser();
     try {
-      var response =
+      final response =
           await Dio().get("$urlLink/v2/nilai?id=$id&semester=$semester",
               options: Options(
                 headers: {
                   "x-access-token": await SharedPrefs().getAccessToken()
                 },
                 followRedirects: false,
-                validateStatus: (status) {
+                validateStatus: (final status) {
                   return status! < 500;
                 },
               ));

@@ -18,11 +18,11 @@ class GuruRepository implements GuruService {
   Future<Either<ErrorEither, GuruModel>> getDataGuru() async {
     dio.interceptors.add(PrettyDioLogger());
     try {
-      var response = await dio.get("$urlLink/v2/guru",
+      final response = await dio.get("$urlLink/v2/guru",
           options: Options(
             headers: {"x-access-token": await SharedPrefs().getAccessToken()},
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));

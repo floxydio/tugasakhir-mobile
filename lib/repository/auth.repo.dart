@@ -11,7 +11,7 @@ import 'package:tugasakhirmobile/models/profileimage_model.dart';
 abstract class AuthService {
   Future<Either<ErrorEither, DataJwt>> getRefreshToken();
   Future<Either<ErrorEither, LoginModel>> signIn(
-      String username, String password);
+      final String username, final String password);
   Future<Either<ErrorEither, ProfileImage>> imageProfile();
 }
 
@@ -24,14 +24,14 @@ class AuthRepository implements AuthService {
     dio.interceptors.add(PrettyDioLogger());
 
     try {
-      var response = await dio.get("$urlLink/v2/refresh-token",
+      final response = await dio.get("$urlLink/v2/refresh-token",
           options: Options(
             headers: {
               "x-access-token": await SharedPrefs().getAccessToken(),
             },
             contentType: Headers.formUrlEncodedContentType,
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));
@@ -47,18 +47,18 @@ class AuthRepository implements AuthService {
 
   @override
   Future<Either<ErrorEither, LoginModel>> signIn(
-      String username, String password) async {
+      final String username, final String password) async {
     dio.interceptors.add(PrettyDioLogger());
 
-    Map<String, dynamic> data = {"username": username, "password": password};
+    final Map<String, dynamic> data = {"username": username, "password": password};
 
     try {
-      var response = await dio.post("$urlLink/v2/sign-in",
+      final response = await dio.post("$urlLink/v2/sign-in",
           data: data,
           options: Options(
             contentType: Headers.formUrlEncodedContentType,
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));
@@ -77,14 +77,14 @@ class AuthRepository implements AuthService {
     dio.interceptors.add(PrettyDioLogger());
 
     try {
-      var response = await dio.get(
+      final response = await dio.get(
           "$urlLink/v2/profile-image/${await SharedPrefs().getAccessToken()}",
           options: Options(
             headers: {
               "x-access-token": await SharedPrefs().getAccessToken(),
             },
             followRedirects: false,
-            validateStatus: (status) {
+            validateStatus: (final status) {
               return status! < 500;
             },
           ));

@@ -6,7 +6,7 @@ class CatatanHarian {
 
   CatatanHarian({this.id, this.title, this.description, this.date});
 
-  factory CatatanHarian.fromJson(Map<String, dynamic> json) {
+  factory CatatanHarian.fromJson(final Map<String, dynamic> json) {
     return CatatanHarian(
       id: json['id'] as int?,
       title: json['title'] as String?,

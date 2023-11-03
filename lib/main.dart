@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:path/path.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
@@ -14,6 +15,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tugasakhirmobile/viewmodel/guru_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugasakhirmobile/viewmodel/nilai_viewmodel.dart';
+import 'package:tugasakhirmobile/viewmodel/settings_viewmodel.dart';
+import 'package:tugasakhirmobile/viewmodel/ujian_soal_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/ujian_viewmodel.dart';
 
 Future<void> main() async {
@@ -24,11 +27,13 @@ Future<void> main() async {
   );
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => AbsenViewModel()),
-      ChangeNotifierProvider(create: (context) => AuthViewModel()),
-      ChangeNotifierProvider(create: (context) => GuruViewModel()),
-      ChangeNotifierProvider(create: (context) => NilaiViewModel()),
-      ChangeNotifierProvider(create: (context) => UjianViewModel())
+      ChangeNotifierProvider(create: (final context) => UjianSoalViewModel()),
+      ChangeNotifierProvider(create: (final context) => AbsenViewModel()),
+      ChangeNotifierProvider(create: (final context) => AuthViewModel()),
+      ChangeNotifierProvider(create: (final context) => GuruViewModel()),
+      ChangeNotifierProvider(create: (final context) => NilaiViewModel()),
+      ChangeNotifierProvider(create: (final context) => UjianViewModel()),
+      ChangeNotifierProvider(create: (final context) => SettingsViewModel())
     ],
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -58,12 +63,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkToken() async {
-    var token = await SharedPrefs().getAccessToken();
+    final token = await SharedPrefs().getAccessToken();
     if (token.isEmpty) {
-      _checkTimer = Timer(
-          const Duration(seconds: 1),
-          () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const LoginScreen())));
+      _checkTimer = Timer(const Duration(seconds: 1),
+          () => Get.offAll(() => const LoginScreen()));
     } else {
       _checkTimer = Timer(const Duration(seconds: 1), () {
         Get.offAll(() => const HomeScreen());
@@ -79,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff345FB4),
       body: SafeArea(

@@ -54,12 +54,12 @@ class AbsenViewModel extends ChangeNotifier {
   void getAbsen() async {
     EasyLoading.show(status: 'Loading Get Absen...');
     absenData = [];
-    var kelasId = await SharedPrefs().getKelasId();
-    var absenRepo = await AbsenRepository().findAbsen(getIntDay!, kelasId);
+    final kelasId = await SharedPrefs().getKelasId();
+    final absenRepo = await AbsenRepository().findAbsen(getIntDay!, kelasId);
 
-    absenRepo.fold((l) {
+    absenRepo.fold((final l) {
       EasyLoading.showError(l.message!);
-    }, (r) => {absenData.addAll(r.data!.toList())});
+    }, (final r) => {absenData.addAll(r.data!.toList())});
 
     EasyLoading.dismiss();
     notifyListeners();
@@ -70,9 +70,9 @@ class AbsenViewModel extends ChangeNotifier {
   void getAbsenData() async {
     await EasyLoading.show(status: 'Loading Get History Absen...');
     absenDataHistory = [];
-    var absenRepo = await AbsenRepository().statusAbsenData();
-    absenRepo.fold((l) => {EasyLoading.showError(l.message!)},
-        (r) => {absenDataHistory.addAll(r.data!.toList())});
+    final absenRepo = await AbsenRepository().statusAbsenData();
+    absenRepo.fold((final l) => {EasyLoading.showError(l.message!)},
+        (final r) => {absenDataHistory.addAll(r.data!.toList())});
     notifyListeners();
   }
 
@@ -81,11 +81,11 @@ class AbsenViewModel extends ChangeNotifier {
   void getAbsenDetailById() async {
     absenHistoryDetail.clear();
     await EasyLoading.show(status: "Tunggu Sebentar...");
-    var absenRepo = await AbsenRepository().absenDetail();
+    final absenRepo = await AbsenRepository().absenDetail();
 
-    absenRepo.fold((l) {
+    absenRepo.fold((final l) {
       EasyLoading.showError(l.message!);
-    }, (r) {
+    }, (final r) {
       absenHistoryDetail.addAll(r.data!.toList());
     });
 
@@ -93,14 +93,14 @@ class AbsenViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void createAbsen(CreateAbsen absenForm) async {
-    var now = DateTime.now();
+  void createAbsen(final CreateAbsen absenForm) async {
+    final now = DateTime.now();
 
-    var absenRepo = await AbsenRepository().createAbsen(absenForm);
+    final absenRepo = await AbsenRepository().createAbsen(absenForm);
 
     absenRepo.fold(
-        (l) => {EasyLoading.showError(l.message!)},
-        (r) => {
+        (final l) => {EasyLoading.showError(l.message!)},
+        (final r) => {
               NotificationService().showNotification("Berhasil Absen",
                   "Anda Berhasil Absen Pada ${DateFormat.Hms().format(now)}"),
               SharedPrefs().setTodayAbsen(absenForm.pelajaranId)

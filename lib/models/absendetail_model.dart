@@ -5,13 +5,13 @@ class AbsenDetail {
 
   AbsenDetail({this.status, this.message, this.data});
 
-  AbsenDetail.fromJson(Map<String, dynamic> json) {
+  AbsenDetail.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
       data = <AbsenDataDetail>[];
-      json['data'].forEach((v) {
-        data!.add( AbsenDataDetail.fromJson(v));
+      json['data'].forEach((final v) {
+        data!.add(AbsenDataDetail.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class AbsenDetail {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((final v) => v.toJson()).toList();
     }
     return data;
   }
@@ -53,7 +53,7 @@ class AbsenDataDetail {
       this.time,
       this.reason});
 
-  AbsenDataDetail.fromJson(Map<String, dynamic> json) {
+  AbsenDataDetail.fromJson(final Map<String, dynamic> json) {
     id = json['id'];
     namaUser = json['nama_user'];
     namaGuru = json['nama_guru'];

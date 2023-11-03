@@ -5,7 +5,7 @@ class UjianList {
 
   UjianList({this.status, this.data, this.message});
 
-  UjianList.fromJson(Map<String, dynamic> json) {
+  UjianList.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null ? Datas.fromJson(json['data']) : null;
     message = json['message'];
@@ -27,10 +27,10 @@ class Datas {
 
   Datas({this.dataUjian});
 
-  Datas.fromJson(Map<String, dynamic> json) {
+  Datas.fromJson(final Map<String, dynamic> json) {
     if (json['data_ujian'] != null) {
       dataUjian = <DataUjian>[];
-      json['data_ujian'].forEach((v) {
+      json['data_ujian'].forEach((final v) {
         dataUjian!.add(DataUjian.fromJson(v));
       });
     }
@@ -39,7 +39,7 @@ class Datas {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (dataUjian != null) {
-      data['data_ujian'] = dataUjian!.map((v) => v.toJson()).toList();
+      data['data_ujian'] = dataUjian!.map((final v) => v.toJson()).toList();
     }
     return data;
   }
@@ -71,7 +71,7 @@ class DataUjian {
       this.kelasId,
       this.totalSoal});
 
-  DataUjian.fromJson(Map<String, dynamic> json) {
+  DataUjian.fromJson(final Map<String, dynamic> json) {
     id = json['id'];
     namaUjian = json['nama_ujian'];
     createdAt = json['createdAt'];

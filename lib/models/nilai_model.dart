@@ -5,11 +5,11 @@ class NilaiData {
 
   NilaiData({this.status, this.data, this.message});
 
-  NilaiData.fromJson(Map<String, dynamic> json) {
+  NilaiData.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <NilaiList>[];
-      json['data'].forEach((v) {
+      json['data'].forEach((final v) {
         data!.add( NilaiList.fromJson(v));
       });
     }
@@ -20,7 +20,7 @@ class NilaiData {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((final v) => v.toJson()).toList();
     }
     data['message'] = message;
     return data;
@@ -39,7 +39,7 @@ class NilaiList {
   NilaiList(
       {this.id, this.uts, this.uas, this.kelasId, this.userId, this.semester,this.nama});
 
-  NilaiList.fromJson(Map<String, dynamic> json) {
+  NilaiList.fromJson(final Map<String, dynamic> json) {
     id = json['id'];
     uts = json['uts'];
     uas = json['uas'];

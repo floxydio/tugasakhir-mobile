@@ -25,10 +25,10 @@ class _NilaiScreenState extends State<NilaiScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(body: SafeArea(child: SingleChildScrollView(
       child: Consumer<NilaiViewModel>(
-        builder: (_, nilaiVm, __) {
+        builder: (final _, final nilaiVm, final __) {
           return Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
               child: Column(
@@ -60,7 +60,7 @@ class _NilaiScreenState extends State<NilaiScreen> {
                       physics: const ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: nilaiVm.nilaiListData.length,
-                      itemBuilder: (context, i) {
+                      itemBuilder: (final context, final i) {
                         return Card(
                             child: Column(
                           children: [

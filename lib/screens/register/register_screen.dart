@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     final authViewModel = Provider.of<AuthViewModel>(context, listen: false);
 
     return Scaffold(
@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 45,
                               child: TextFormField(
                                   textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) =>
+                                  onFieldSubmitted: (final _) =>
                                       FocusScope.of(context)
                                           .nextFocus(), // focus to next
                                   controller: namaController,
@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 45,
                               child: TextFormField(
                                   textInputAction: TextInputAction.next,
-                                  onFieldSubmitted: (_) =>
+                                  onFieldSubmitted: (final _) =>
                                       FocusScope.of(context)
                                           .nextFocus(), // focus to next
                                   controller: usernameController,
