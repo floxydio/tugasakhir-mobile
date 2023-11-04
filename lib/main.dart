@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:path/path.dart';
 import 'dart:async';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
@@ -44,7 +43,6 @@ Future<void> main() async {
   ));
 }
 
-// Stateful untuk membuat state yang dapat berubah / refresh variabel
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -53,10 +51,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Timer? _checkTimer; // Untuk Kondisi
+  Timer? _checkTimer;
 
   @override
-  // InitState adalah fungsi yang pertama kali dijalankan ketika class dibuat
   void initState() {
     super.initState();
     checkToken();
@@ -74,7 +71,6 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // Dispose adalah fungsi yang dijalankan ketika class di dispose
   @override
   void dispose() {
     super.dispose();

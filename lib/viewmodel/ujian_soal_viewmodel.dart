@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:tugasakhirmobile/models/ujian_form_model.dart';
 import 'package:tugasakhirmobile/models/ujian_soal_model.dart';
 import 'package:tugasakhirmobile/repository/ujian.repo.dart';
 
@@ -10,6 +11,17 @@ class UjianSoalViewModel extends ChangeNotifier {
 
   void changeIndex(final int id) {
     idUjian = id;
+    notifyListeners();
+  }
+
+  void sendUjian(final UjianFormSubmit formSubmit) async {
+    final ujianSoalRepository =
+        await UjianRepository().sendUjian(formSubmit, idUjian!);
+    ujianSoalRepository.fold((final l) {
+      EasyLoading.showError(l.message!);
+    }, (final r) {
+      EasyLoading.showSuccess("Sukses Ujian");
+    });
     notifyListeners();
   }
 

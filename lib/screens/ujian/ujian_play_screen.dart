@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:tugasakhirmobile/models/ujian_form_model.dart';
 import 'package:tugasakhirmobile/viewmodel/ujian_soal_viewmodel.dart';
 import 'package:get/get.dart';
 
@@ -15,18 +19,35 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
   List<String> jawabanEssay = [];
   final TextEditingController essayController = TextEditingController();
   String? answer;
-  int index = 1;
+  int index = 0;
+  int nomor = 0;
+  Timer? _timer;
+  int _seconds = 60 * 60;
+
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (final timer) {
+      if (_seconds == 0) {
+        _timer?.cancel();
+      } else {
+        setState(() {
+          _seconds--;
+        });
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     Provider.of<UjianSoalViewModel>(context, listen: false).fetchUjian();
+    startTimer();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     essayController.dispose();
+    _timer?.cancel();
   }
 
   @override
@@ -64,6 +85,7 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
                           onPressed: () {
                             setState(() {
                               index--;
+                              nomor--;
                             });
                           },
                           child: const Text('Back')),
@@ -71,20 +93,22 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
               const SizedBox(
                 height: 20,
               ),
-              (index + 1 ==
+              (index ==
                       Provider.of<UjianSoalViewModel>(context, listen: false)
                               .questions
-                              .length +
-                          Provider.of<UjianSoalViewModel>(context,
-                                  listen: false)
-                              .essay
-                              .length)
+                              .length -
+                          1)
                   ? SizedBox(
                       width: Get.width,
                       height: 50,
                       child: ElevatedButton(
                           onPressed: () {
-                            jawabanEssay.add(essayController.text);
+                            final formSubmit = UjianFormSubmit(
+                                jawabanPg: jawabanPilihanRadio,
+                                jawabanEssay: jawabanEssay);
+                            Provider.of<UjianSoalViewModel>(context,
+                                    listen: false)
+                                .sendUjian(formSubmit);
                           },
                           child: const Text("Submit")),
                     )
@@ -94,14 +118,18 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
                       child: ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              index++;
-                              if (index >
-                                  Provider.of<UjianSoalViewModel>(context,
-                                          listen: false)
-                                      .questions
-                                      .length) {
-                                jawabanEssay.add(essayController.text);
-                                essayController.clear();
+                              if (jawabanPilihanRadio.length == index) {
+                                Fluttertoast.showToast(
+                                    msg: "Pilih Jawaban Terlebih Dahulu",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 2,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              } else {
+                                index++;
+                                nomor++;
                               }
                             });
                           },
@@ -118,11 +146,27 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 30.0, bottom: 10, top: 50),
-                  child: Text(
-                      "Question ${index + 1}/${ujianVM.questions.length + ujianVM.essay.length}",
-                      style: const TextStyle(
+                  padding: const EdgeInsets.only(right: 12.0, top: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Icon(
+                        Icons.timelapse,
+                        color: Colors.white,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                          "${(_seconds ~/ 60).toString().padLeft(2, '0')}:${(_seconds % 60).toString().padLeft(2, '0')}",
+                          style: const TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 30.0, bottom: 10, top: 50),
+                  child: Text("Question Pilihan Ganda",
+                      style: TextStyle(
                           fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Color(0xffB4B9CD))),
@@ -202,39 +246,40 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
                                       }),
                                 ]),
                           )
-                        : index == ujianVM.questions.length ||
-                                index > ujianVM.questions.length
-                            ? ListTile(
-                                contentPadding:
-                                    const EdgeInsets.only(left: 30, right: 30),
-                                title: Text(
-                                  ujianVM
-                                      .essay[index - ujianVM.questions.length]
-                                      .soal,
-                                  style: const TextStyle(
-                                      fontSize: 25, color: Colors.white),
-                                ),
-                                subtitle: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    TextFormField(
-                                      controller: essayController,
-                                      maxLines: 10,
-                                      decoration: const InputDecoration(
-                                          border: OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20))),
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          hintText: "Jawaban"),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : const SizedBox(),
+                        : const SizedBox(),
+                // ujianVM.essay.isEmpty
+                //     ? SizedBox()
+                //     : index > ujianVM.questions.length
+                //         ? ListTile(
+                //             contentPadding:
+                //                 const EdgeInsets.only(left: 30, right: 30),
+                //             title: Text(
+                //               ujianVM
+                //                   .essay[index - ujianVM.questions.length].soal,
+                //               style: const TextStyle(
+                //                   fontSize: 25, color: Colors.white),
+                //             ),
+                //             subtitle: Column(
+                //               mainAxisSize: MainAxisSize.min,
+                //               children: [
+                //                 const SizedBox(
+                //                   height: 20,
+                //                 ),
+                //                 TextFormField(
+                //                   controller: essayController,
+                //                   maxLines: 10,
+                //                   decoration: const InputDecoration(
+                //                       border: OutlineInputBorder(
+                //                           borderRadius: BorderRadius.all(
+                //                               Radius.circular(20))),
+                //                       fillColor: Colors.white,
+                //                       filled: true,
+                //                       hintText: "Jawaban"),
+                //                 ),
+                //               ],
+                //             ),
+                //           )
+                //         : const SizedBox(),
               ],
             );
           }),
