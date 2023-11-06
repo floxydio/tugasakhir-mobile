@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:tugasakhirmobile/constant/shared_pref.dart';
+import 'package:tugasakhirmobile/models/check_exam_model.dart';
 import 'package:tugasakhirmobile/models/error_either.dart';
 import 'package:tugasakhirmobile/models/ujian_data_model.dart';
 import 'package:tugasakhirmobile/models/ujian_form_model.dart';
@@ -13,6 +14,7 @@ abstract class UjianService {
   Future<Either<ErrorEither, QuizResponse>> getDetailUjian(final int id);
   Future<Either<ErrorEither, Response>> sendUjian(
       final UjianFormSubmit form, final int id);
+  Future<Either<ErrorEither, CheckExamModel>> checkExam(final int idujian);
 }
 
 class UjianRepository implements UjianService {
@@ -97,5 +99,27 @@ class UjianRepository implements UjianService {
         return Left(ErrorEither(400, true, e.toString()));
       }
     });
+  }
+
+  @override
+  Future<Either<ErrorEither, CheckExamModel>> checkExam(final int id) async {
+    dio.interceptors.add(PrettyDioLogger());
+    try {
+      final response = await Dio().get(
+          "$urlLink/v2/check-exam/$id?token=${await SharedPrefs().getAccessToken()}",
+          options: Options(
+            followRedirects: false,
+            validateStatus: (final status) {
+              return status! < 500;
+            },
+          ));
+      if (response.statusCode == 200) {
+        return Right(CheckExamModel.fromJson(response.data));
+      } else {
+        return Left(ErrorEither(400, true, response.data["message"]));
+      }
+    } catch (e) {
+      return Left(ErrorEither(400, true, e.toString()));
+    }
   }
 }

@@ -3,7 +3,6 @@
   import 'package:provider/provider.dart';
   import 'package:tugasakhirmobile/constant/color_constant.dart';
   import 'package:tugasakhirmobile/models/ujianrules_model.dart';
-  import 'package:tugasakhirmobile/screens/ujian/ujian_play_screen.dart';
   import 'package:tugasakhirmobile/viewmodel/ujian_soal_viewmodel.dart';
   import 'package:tugasakhirmobile/viewmodel/ujian_viewmodel.dart';
 
@@ -191,7 +190,6 @@
                                                     context,
                                                     listen: false)
                                                 .changeIndex(data.id!);
-                                            Get.to(const UjianPlay());
                                           },
                                           icon: const Icon(Icons.book),
                                           label: const Text("Mulai Ujian"),

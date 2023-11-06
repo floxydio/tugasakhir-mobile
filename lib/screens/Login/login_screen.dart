@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     usernameController.dispose();
     passwordController.dispose();
+    _formKey.currentState?.dispose();
   }
 
   @override
@@ -172,7 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ))),
                   ),
                 ),
-                KeyboardVisibilityBuilder(builder: (final context, final visible) {
+                KeyboardVisibilityBuilder(
+                    builder: (final context, final visible) {
                   if (visible) {
                     return const SizedBox();
                   } else {
