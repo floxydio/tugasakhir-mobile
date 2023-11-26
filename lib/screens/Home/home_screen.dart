@@ -93,10 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
-    Provider.of<AuthViewModel>(context, listen: false).profileImage();
-    Provider.of<AbsenViewModel>(context, listen: false).getAbsenData();
-    Provider.of<SettingsViewModel>(context, listen: false).loadEnvUrl();
+    WidgetsBinding.instance.addPostFrameCallback((final _) {
+      Provider.of<SettingsViewModel>(context, listen: false).loadEnvUrl();
+
+      Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
+      Provider.of<AuthViewModel>(context, listen: false).profileImage();
+      Provider.of<AbsenViewModel>(context, listen: false).getAbsenData();
+    });
     greeting = getGreeting();
   }
 
@@ -170,7 +173,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             "Anda Berhasil Absen Pada ${DateTime.now()}");
                                       },
                                       child: Container(
-                                          width: 150,
                                           height: 190,
                                           decoration: BoxDecoration(
                                               boxShadow: [
@@ -189,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       Radius.circular(10))),
                                           child: Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 19.0, top: 22),
+                                                left: 19.0, top: 22, right: 19),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -198,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     "assets/ic_attendance.png"),
                                                 const Text("80%",
                                                     style: TextStyle(
-                                                        fontSize: 40,
+                                                        fontSize: 35,
                                                         fontWeight:
                                                             FontWeight.bold)),
                                                 const Text("ABSEN",
@@ -213,7 +215,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           )),
                                     ),
                                     Container(
-                                        width: 140,
                                         height: 190,
                                         decoration: BoxDecoration(
                                             boxShadow: [
@@ -232,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Radius.circular(10))),
                                         child: Padding(
                                           padding: const EdgeInsets.only(
-                                              left: 19.0, top: 22),
+                                              left: 19.0, top: 22, right: 19),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -278,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   GridView.builder(
                                       padding: const EdgeInsets.only(
-                                          left: 20, right: 20),
+                                          left: 20, right: 20, top: 30),
                                       shrinkWrap: true,
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -286,28 +287,53 @@ class _HomeScreenState extends State<HomeScreen> {
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
-                                              crossAxisSpacing: 40,
+                                              crossAxisSpacing: 20,
                                               mainAxisSpacing: 30),
                                       itemBuilder:
                                           (final context, final index) {
                                         return InkWell(
                                           onTap: () {
-                                            iconBuild[index].name != "Logout" &&
-                                                    iconBuild[index].name !=
-                                                        "Profile"
-                                                ? Get.to(iconBuild[index].page,
-                                                    transition:
-                                                        Transition.rightToLeft)
-                                                : iconBuild[index].name ==
-                                                        "Profile"
-                                                    ? Get.to(ProfilePage(
-                                                        imageNetwork:
-                                                            authVM.imageData!))
-                                                    : Provider.of<
-                                                                AuthViewModel>(
-                                                            context,
-                                                            listen: false)
-                                                        .logout();
+                                            if (iconBuild[index].name ==
+                                                "Catatan") {
+                                              Get.dialog(AlertDialog(
+                                                content: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: InkWell(
+                                                              onTap: () {
+                                                                Get.back();
+                                                              },
+                                                              child: const Icon(
+                                                                  Icons
+                                                                      .close))),
+                                                      const Text(
+                                                          "Maaf untuk fitur ini belum tersedia")
+                                                    ]),
+                                              ));
+                                            } else {
+                                              iconBuild[index].name !=
+                                                          "Logout" &&
+                                                      iconBuild[index].name !=
+                                                          "Profile"
+                                                  ? Get.to(
+                                                      iconBuild[index].page,
+                                                      transition: Transition
+                                                          .rightToLeft)
+                                                  : iconBuild[index].name ==
+                                                          "Profile"
+                                                      ? Get.to(ProfilePage(
+                                                          imageNetwork: authVM
+                                                              .imageData!))
+                                                      : Provider.of<
+                                                                  AuthViewModel>(
+                                                              context,
+                                                              listen: false)
+                                                          .logout();
+                                            }
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -339,6 +365,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         );
                                       }),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Text(
+                                    "Version: 0.8.0 (Beta)",
+                                    style: TextStyle(
+                                        fontSize: 10, color: Colors.grey),
+                                  ),
                                   const SizedBox(height: 60),
                                 ],
                               )),

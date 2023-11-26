@@ -11,6 +11,8 @@ class UjianSoalViewModel extends ChangeNotifier {
   List<Question> questions = [];
   List<Essay> essay = [];
   int? idUjian;
+  List<String> jawabanPilihanRadio = [];
+  List<String> jawabanEssay = [];
 
   void changeIndex(final int id) {
     idUjian = id;
@@ -67,6 +69,17 @@ class UjianSoalViewModel extends ChangeNotifier {
             });
 
     EasyLoading.dismiss();
+    notifyListeners();
+  }
+
+  void onChangeJawaban(final String value, final int index) {
+    if (jawabanPilihanRadio == [] || jawabanPilihanRadio.isEmpty) {
+      jawabanPilihanRadio.add(value.toString());
+    } else if (index < jawabanPilihanRadio.length) {
+      jawabanPilihanRadio[index] = value.toString();
+    } else {
+      jawabanPilihanRadio.add(value.toString());
+    }
     notifyListeners();
   }
 }

@@ -51,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: SafeArea(
                         child: SingleChildScrollView(
                             child: Container(
-                      height: 550,
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
@@ -166,30 +165,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(
                               height: 10,
-                            )
+                          )
                           ],
                         ),
                       ),
                     ))),
                   ),
                 ),
-                KeyboardVisibilityBuilder(
-                    builder: (final context, final visible) {
-                  if (visible) {
-                    return const SizedBox();
-                  } else {
-                    return Positioned.fill(
-                      top: 0,
-                      child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Image.asset(
-                            "assets/login_screen.png",
-                            width: 400,
-                            height: 400,
-                          )),
-                    );
-                  }
-                })
+                // KeyboardVisibilityBuilder(
+                //     builder: (final context, final visible) {
+                //   if (visible) {
+                //     return const SizedBox();
+                //   } else {
+                //     return Positioned.fill(
+                //       top: 0,
+                //       child: Align(
+                //           alignment: Alignment.topCenter,
+                //           child: Image.asset(
+                //             "assets/login_screen.png",
+                //             width: 400,
+                //             height: 400,
+                //           )),
+                //     );
+                //   }
+                // })
               ],
             ),
           )),
