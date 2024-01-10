@@ -27,7 +27,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return PersistentTabView(
       context,
       controller: _controller,

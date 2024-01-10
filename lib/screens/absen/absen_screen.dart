@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:tugasakhirmobile/constant/color_constant.dart';
+import 'package:tugasakhirmobile/constant/shared_pref.dart';
 import 'package:tugasakhirmobile/models/create_absen_model.dart';
+import 'package:tugasakhirmobile/notification/notification_service.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
-import 'package:tugasakhirmobile/viewmodel/auth_repository.dart';
+import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 import 'package:flutter_analog_clock/flutter_analog_clock.dart';
 
 class AbsenPage extends StatefulWidget {
@@ -26,7 +28,7 @@ class _AbsenPageState extends State<AbsenPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((final timeStamp) {
       Provider.of<AbsenViewModel>(context, listen: false).getCurrentDay();
       Provider.of<AbsenViewModel>(context, listen: false).getAbsen();
       Provider.of<AuthViewModel>(context, listen: false).getRefreshToken();
@@ -34,9 +36,10 @@ class _AbsenPageState extends State<AbsenPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var authVm = Provider.of<AuthViewModel>(context, listen: false);
-    return Consumer<AbsenViewModel>(builder: (context, absenVM, _) {
+  Widget build(final BuildContext context) {
+    final authVm = Provider.of<AuthViewModel>(context, listen: false);
+    return Consumer<AbsenViewModel>(
+        builder: (final context, final absenVM, final _) {
       return Scaffold(
           body: SingleChildScrollView(
         child: SafeArea(
@@ -66,8 +69,8 @@ class _AbsenPageState extends State<AbsenPage> {
               ),
               const Align(
                   alignment: Alignment.center,
-                  child: SizedBox(
-                      width: 200, height: 200, child: AnalogClock())),
+                  child:
+                      SizedBox(width: 200, height: 200, child: AnalogClock())),
               const SizedBox(
                 height: 20,
               ),
@@ -91,7 +94,7 @@ class _AbsenPageState extends State<AbsenPage> {
                           height: 20,
                         ),
                         Text(
-                          "(${absenVM.absenData[0].guru.toString()})",
+                          "(${absenVM.absenData[0].users?.nama.toString()})",
                           style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(
@@ -103,18 +106,30 @@ class _AbsenPageState extends State<AbsenPage> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: ColorConstant.colorPrimary),
-                              onPressed: () {
-                                var data = CreateAbsen(
-                                    userId: authVm.dataJwt.id!,
-                                    guruId: absenVM.absenData[0].guruId!,
-                                    kelasId: absenVM.absenData[0].kelasId!,
+                              onPressed: () async {
+                                final data = CreateAbsen(
+                                    userId: authVm.dataJwt!.id!,
+                                    guruId:
+                                        absenVM.absenData[0].users?.userId ?? 0,
+                                    kelasId:
+                                        absenVM.absenData[0].kelas?.id ?? 0,
                                     pelajaranId:
-                                        absenVM.absenData[0].pelajaranId!,
+                                        absenVM.absenData[0].pelajaranId ?? 0,
                                     keterangan: "ABSEN",
                                     reason: "-");
-                                Provider.of<AbsenViewModel>(context,
-                                        listen: false)
-                                    .createAbsen(context, data);
+                                final checkAbsen = await SharedPrefs()
+                                    .getAbsenToday(
+                                        absenVM.absenData[0].pelajaranId!);
+                                if (checkAbsen == true) {
+                                  NotificationService().showNotification(
+                                      "Gagal Absen",
+                                      "Anda Sudah Absen Hari Ini");
+                                } else {
+                                  // ignore: use_build_context_synchronously
+                                  Provider.of<AbsenViewModel>(context,
+                                          listen: false)
+                                      .createAbsen(data);
+                                }
                               },
                               child: const Text("Absen Sekarang")),
                         ),
@@ -130,7 +145,7 @@ class _AbsenPageState extends State<AbsenPage> {
                               onPressed: () {
                                 showDialog(
                                     context: context,
-                                    builder: (context) {
+                                    builder: (final context) {
                                       return AlertDialog(
                                         title: const Text("Izin Absen"),
                                         content: TextFormField(
@@ -146,12 +161,16 @@ class _AbsenPageState extends State<AbsenPage> {
                                               child: const Text("Batal")),
                                           TextButton(
                                               onPressed: () {
-                                                var data = CreateAbsen(
-                                                    userId: authVm.dataJwt.id!,
-                                                    guruId: absenVM
-                                                        .absenData[0].guruId!,
+                                                final data = CreateAbsen(
+                                                    userId: authVm.dataJwt!.id!,
+                                                    guruId: absenVM.absenData[0]
+                                                            .users?.userId ??
+                                                        0,
                                                     kelasId: absenVM
-                                                        .absenData[0].kelasId!,
+                                                            .absenData[0]
+                                                            .kelas
+                                                            ?.id ??
+                                                        0,
                                                     pelajaranId: absenVM
                                                         .absenData[0]
                                                         .pelajaranId!,
@@ -161,7 +180,7 @@ class _AbsenPageState extends State<AbsenPage> {
                                                 Provider.of<AbsenViewModel>(
                                                         context,
                                                         listen: false)
-                                                    .createAbsen(context, data);
+                                                    .createAbsen(data);
                                                 keteranganController.clear();
                                               },
                                               child: const Text("Kirim"))

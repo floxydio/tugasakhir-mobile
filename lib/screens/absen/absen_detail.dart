@@ -12,21 +12,36 @@ class AbsenDetail extends StatefulWidget {
 class _AbsenDetailState extends State<AbsenDetail> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<AbsenViewModel>(context, listen: false).getAbsenDetailById();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(final BuildContext context) {
     return Scaffold(body: SafeArea(child: Consumer<AbsenViewModel>(
-      builder: (context, absenVm, _) {
+      builder: (final context, final absenVm, final _) {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 40, left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
               children: [
-                const Center(child: Text("Data Absen")),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back_ios)),
+                    const Text(
+                      "History Absen",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -34,8 +49,8 @@ class _AbsenDetailState extends State<AbsenDetail> {
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     itemCount: absenVm.absenHistoryDetail.length,
-                    itemBuilder: (context, index) {
-                      var data = absenVm.absenHistoryDetail[index];
+                    itemBuilder: (final context, final index) {
+                      final data = absenVm.absenHistoryDetail[index];
                       return Card(
                         child: ListTile(
                           title: Text(

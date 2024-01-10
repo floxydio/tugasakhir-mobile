@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "952214166257",
+    "project_id": "iniss-firebase",
+    "storage_bucket": "iniss-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952214166257:android:f9865c6c90ae7af1466750",
+        "android_client_info": {
+          "package_name": "com.iniss.inissmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952214166257-rh5bm4b87cb21puit97pcm41usdi6kfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvoTuMjuWSj5Y4NM6cmYcaZvEwKgAcvd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952214166257-rh5bm4b87cb21puit97pcm41usdi6kfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

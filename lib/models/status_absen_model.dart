@@ -5,12 +5,12 @@ class StatusAbsen {
 
   StatusAbsen({this.status, this.message, this.data});
 
-  StatusAbsen.fromJson(Map<String, dynamic> json) {
+  StatusAbsen.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
       data = <AbsenDataHistory>[];
-      json['data'].forEach((v) {
+      json['data'].forEach((final v) {
         data!.add(AbsenDataHistory.fromJson(v));
       });
     }
@@ -21,7 +21,7 @@ class StatusAbsen {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((final v) => v.toJson()).toList();
     }
     return data;
   }
@@ -34,7 +34,7 @@ class AbsenDataHistory {
 
   AbsenDataHistory({this.totalAbsen, this.totalIzin, this.totalAlpha});
 
-  AbsenDataHistory.fromJson(Map<String, dynamic> json) {
+  AbsenDataHistory.fromJson(final Map<String, dynamic> json) {
     totalAbsen = json['total_absen'];
     totalIzin = json['total_izin'];
     totalAlpha = json['total_alpha'];

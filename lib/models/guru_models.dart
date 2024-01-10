@@ -5,11 +5,11 @@ class GuruModel {
 
   GuruModel({this.status, this.data, this.message});
 
-  GuruModel.fromJson(Map<String, dynamic> json) {
+  GuruModel.fromJson(final Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
       data = <GuruData>[];
-      json['data'].forEach((v) {
+      json['data'].forEach((final v) {
         data!.add(GuruData.fromJson(v));
       });
     }
@@ -20,7 +20,7 @@ class GuruModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((final v) => v.toJson()).toList();
     }
     data['message'] = message;
     return data;
@@ -36,7 +36,7 @@ class GuruData {
 
   GuruData({this.id, this.nama, this.mengajar, this.statusGuru, this.rating});
 
-  GuruData.fromJson(Map<String, dynamic> json) {
+  GuruData.fromJson(final Map<String, dynamic> json) {
     id = json['id'];
     nama = json['nama'];
     mengajar = json['mengajar'];
