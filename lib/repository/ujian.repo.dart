@@ -78,6 +78,7 @@ class UjianRepository implements UjianService {
           "jawaban_pg": form.jawabanPg,
           "jawaban_essay": form.jawabanEssay,
           "idujian": id,
+          "semester": form.semester,
           "token": value,
         };
         final response = await Dio().post("$urlLink/v2/ujian-submitted",

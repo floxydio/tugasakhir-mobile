@@ -185,7 +185,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           passwordController.text.isNotEmpty &&
                                           retypePasswordController
                                               .text.isNotEmpty) {
-                                        authViewModel.signInUser(
+                                        authViewModel.signUpUser(
+                                            namaController.text,
                                             usernameController.text,
                                             passwordController.text);
                                       } else if (usernameController

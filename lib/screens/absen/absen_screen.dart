@@ -94,7 +94,7 @@ class _AbsenPageState extends State<AbsenPage> {
                           height: 20,
                         ),
                         Text(
-                          "(${absenVM.absenData[0].guru.toString()})",
+                          "(${absenVM.absenData[0].users?.nama.toString()})",
                           style: const TextStyle(fontSize: 18),
                         ),
                         const SizedBox(
@@ -109,10 +109,12 @@ class _AbsenPageState extends State<AbsenPage> {
                               onPressed: () async {
                                 final data = CreateAbsen(
                                     userId: authVm.dataJwt!.id!,
-                                    guruId: absenVM.absenData[0].guruId!,
-                                    kelasId: absenVM.absenData[0].kelasId!,
+                                    guruId:
+                                        absenVM.absenData[0].users?.userId ?? 0,
+                                    kelasId:
+                                        absenVM.absenData[0].kelas?.id ?? 0,
                                     pelajaranId:
-                                        absenVM.absenData[0].pelajaranId!,
+                                        absenVM.absenData[0].pelajaranId ?? 0,
                                     keterangan: "ABSEN",
                                     reason: "-");
                                 final checkAbsen = await SharedPrefs()
@@ -161,10 +163,14 @@ class _AbsenPageState extends State<AbsenPage> {
                                               onPressed: () {
                                                 final data = CreateAbsen(
                                                     userId: authVm.dataJwt!.id!,
-                                                    guruId: absenVM
-                                                        .absenData[0].guruId!,
+                                                    guruId: absenVM.absenData[0]
+                                                            .users?.userId ??
+                                                        0,
                                                     kelasId: absenVM
-                                                        .absenData[0].kelasId!,
+                                                            .absenData[0]
+                                                            .kelas
+                                                            ?.id ??
+                                                        0,
                                                     pelajaranId: absenVM
                                                         .absenData[0]
                                                         .pelajaranId!,

@@ -67,12 +67,12 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 23,
           color: Color(0xff185FA9),
         )),
-    IconBuild(
-      onTap: () {},
-      page: null,
-      name: "Catatan",
-      iconName: const Icon(Icons.note_alt, size: 23, color: Color(0xff185FA9)),
-    ),
+    // IconBuild(
+    //   onTap: () {},
+    //   page: null,
+    //   name: "Catatan",
+    //   iconName: const Icon(Icons.note_alt, size: 23, color: Color(0xff185FA9)),
+    // ),
     IconBuild(
       onTap: () {},
       page: null,
@@ -113,6 +113,101 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (final context, final authVM, final _) {
           return Scaffold(
             backgroundColor: Colors.white,
+            drawer: Drawer(
+              child: SafeArea(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.update),
+                      title: const Text("Check Update"),
+                      onTap: () {
+                        // Navigator.pop(context);
+                        Get.dialog(
+                          AlertDialog(
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text("Kamu menggunakan versi terakhir"),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                const Text(
+                                  "====== Change Log 0.92 ======",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                    "1. Perbaikan dialog pada fitur daftar ujian"),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                    "2. Optimasi performa aplikasi dan perbaikan pada bug"),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                    "3. Fitur untuk mengantisipasi status waktu ketika exit ujian atau aplikasi crash"),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                    "4. Perubahan Terhadap beberapa design"),
+                                // Button Close
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text("Tutup"),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.warning),
+                      title: const Text("Keluhan / Kritik / Saran"),
+                      onTap: () {
+                        // Navigator.pop(context);
+                        // Get.toNamed("/settings");
+                        Get.dialog(AlertDialog(
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Text("Email: diooktar@gmail.com"),
+                              // Button Close
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  child: const Text("Tutup"),
+                                ),
+                              )
+                            ],
+                          ),
+                        ));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
             body: Stack(
               fit: StackFit.expand,
               children: [
@@ -145,11 +240,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             height: 50,
                                           ),
                                         ),
-                                        subtitle: const Text(
-                                          "Class XI-B | Roll no : 04",
-                                        ),
                                         title: Text(
-                                            "Hi ${authVM.dataJwt!.nama}",
+                                            "Hi, ${authVM.dataJwt!.nama}",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 30,

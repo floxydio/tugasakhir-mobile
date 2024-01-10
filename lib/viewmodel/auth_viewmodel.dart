@@ -42,6 +42,22 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void signUpUser(
+      final String nama, final String username, final String password) async {
+    EasyLoading.show(status: 'Loading...');
+    final authRepository =
+        await AuthRepository().signUp(nama, username, password);
+
+    authRepository.fold((final l) {
+      EasyLoading.showError(l.message!);
+    }, (final r) async {
+      Get.off(const LoginScreen());
+    });
+    EasyLoading.dismiss();
+
+    notifyListeners();
+  }
+
   // void daftarUser(BuildContext context, String nama, String username,
   //     String password) async {
   //   Map<String, dynamic> data = {

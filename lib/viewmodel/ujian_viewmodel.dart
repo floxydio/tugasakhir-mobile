@@ -11,19 +11,23 @@ class UjianViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<DataUjian> dataUjian = [];
+  List<DataUjianList> dataUjian = [];
+  List<bool> checkAlready = [];
 
   void getUjianByKelas() async {
     dataUjian = [];
 
     final ujianRepository = await UjianRepository().getDataUjian();
 
-    ujianRepository.fold((final l) => {EasyLoading.showError(l.message!)},
-        (final r) => {dataUjian.addAll(r.data!.dataUjian!.toList())});
+    ujianRepository.fold(
+        (final l) => {EasyLoading.showError(l.message!)},
+        (final r) => {
+              dataUjian.addAll(r.data!.toList()),
+              checkAlready =
+                  List.generate(r.data!.toList().length, (final index) => false)
+            });
 
     EasyLoading.dismiss();
     notifyListeners();
   }
-
-  
 }

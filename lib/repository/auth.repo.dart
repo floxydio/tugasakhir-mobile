@@ -12,6 +12,8 @@ abstract class AuthService {
   Future<Either<ErrorEither, DataJwt>> getRefreshToken();
   Future<Either<ErrorEither, LoginModel>> signIn(
       final String username, final String password);
+  Future<Either<ErrorEither, int>> signUp(
+      final String nama, final String username, final String password);
   Future<Either<ErrorEither, ProfileImage>> imageProfile();
 }
 
@@ -50,7 +52,11 @@ class AuthRepository implements AuthService {
       final String username, final String password) async {
     dio.interceptors.add(PrettyDioLogger());
 
-    final Map<String, dynamic> data = {"username": username, "password": password};
+    final Map<String, dynamic> data = {
+      "username": username,
+      "password": password,
+      "role": "0",
+    };
 
     try {
       final response = await dio.post("$urlLink/v2/sign-in",
@@ -64,6 +70,37 @@ class AuthRepository implements AuthService {
           ));
       if (response.statusCode == 200 || response.statusCode == 201) {
         return Right(LoginModel.fromJson(response.data));
+      } else {
+        return Left(ErrorEither(400, true, response.data['message']));
+      }
+    } catch (e) {
+      return Left(ErrorEither(400, true, e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ErrorEither, int>> signUp(
+      final String nama, final String username, final String password) async {
+    dio.interceptors.add(PrettyDioLogger());
+
+    final Map<String, dynamic> data = {
+      "nama": nama,
+      "username": username,
+      "password": password,
+    };
+
+    try {
+      final response = await dio.post("$urlLink/v2/sign-up",
+          data: data,
+          options: Options(
+            contentType: Headers.formUrlEncodedContentType,
+            followRedirects: false,
+            validateStatus: (final status) {
+              return status! < 500;
+            },
+          ));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return Right(response.statusCode!);
       } else {
         return Left(ErrorEither(400, true, response.data['message']));
       }

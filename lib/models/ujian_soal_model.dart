@@ -1,23 +1,29 @@
 class QuizResponse {
   String message;
   List<Question> soal;
+  int semester;
   List<Essay> essay;
 
   QuizResponse({
     required this.message,
     required this.soal,
+    required this.semester,
     required this.essay,
   });
 
-  factory QuizResponse.fromJson(final Map<String, dynamic> json) => QuizResponse(
+  factory QuizResponse.fromJson(final Map<String, dynamic> json) =>
+      QuizResponse(
         message: json['message'],
-        soal:
-            List<Question>.from(json['soal'].map((final x) => Question.fromJson(x))),
-        essay: List<Essay>.from(json['essay'].map((final x) => Essay.fromJson(x))),
+        semester: json['semester'],
+        soal: List<Question>.from(
+            json['soal'].map((final x) => Question.fromJson(x))),
+        essay:
+            List<Essay>.from(json['essay'].map((final x) => Essay.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         'message': message,
+        'semester': semester,
         'soal': List<dynamic>.from(soal.map((final x) => x.toJson())),
         'essay': List<dynamic>.from(essay.map((final x) => x.toJson())),
       };

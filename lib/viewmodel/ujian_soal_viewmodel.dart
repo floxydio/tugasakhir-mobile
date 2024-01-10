@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugasakhirmobile/models/ujian_form_model.dart';
 import 'package:tugasakhirmobile/models/ujian_soal_model.dart';
 import 'package:tugasakhirmobile/repository/ujian.repo.dart';
@@ -13,22 +13,32 @@ class UjianSoalViewModel extends ChangeNotifier {
   int? idUjian;
   List<String> jawabanPilihanRadio = [];
   List<String> jawabanEssay = [];
+  int? semester;
+  int? timer;
 
-  void changeIndex(final int id) {
+  void changeIndex(final int id, final List<bool> exam, final int index,
+      final int timerExam) {
     idUjian = id;
-    checkExam(id);
-
+    timer = timerExam;
+    checkExam(id, exam, index);
     notifyListeners();
   }
 
-  void sendUjian(final UjianFormSubmit formSubmit) async {
+  void sendUjian(
+      final UjianFormSubmit formSubmit, final VoidCallback onSuccess) async {
     final ujianSoalRepository =
         await UjianRepository().sendUjian(formSubmit, idUjian!);
     ujianSoalRepository.fold((final l) {
       EasyLoading.showError(l.message!);
     }, (final r) {
       EasyLoading.showSuccess("Sukses Ujian");
+      onSuccess();
     });
+    notifyListeners();
+  }
+
+  void resetJawabanEssay() {
+    jawabanEssay = [];
     notifyListeners();
   }
 
@@ -44,28 +54,28 @@ class UjianSoalViewModel extends ChangeNotifier {
       if (r.essay.isNotEmpty) {
         essay.addAll(r.essay);
       }
+      semester = r.semester;
     });
     notifyListeners();
   }
 
-  void checkExam(final int idujian) async {
+  void checkExam(
+      final int idujian, final List<bool> checkExam, final int index) async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final checkTimer = sharedPrefs.getInt("lastTimer");
+    final fixTimer = checkTimer ?? timer!;
     final ujianRepository = await UjianRepository().checkExam(idujian);
-
     ujianRepository.fold(
         (final l) => {EasyLoading.showError(l.message!)},
         (final r) => {
               if (r.status == true)
-                {
-                  Fluttertoast.showToast(
-                      msg: "Maaf! Kamu telah mengerjakan ujian ini",
-                      timeInSecForIosWeb: 2,
-                      backgroundColor: Colors.red,
-                      textColor: Colors.white,
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM),
-                }
+                {checkExam[index] = true}
               else
-                {Get.to(const UjianPlay())}
+                {
+                  Get.to(UjianPlay(
+                    timer: fixTimer * 60,
+                  ))
+                }
             });
 
     EasyLoading.dismiss();
