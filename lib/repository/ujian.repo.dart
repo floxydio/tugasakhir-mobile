@@ -7,6 +7,7 @@ import 'package:tugasakhirmobile/models/check_exam_model.dart';
 import 'package:tugasakhirmobile/models/error_either.dart';
 import 'package:tugasakhirmobile/models/ujian_data_model.dart';
 import 'package:tugasakhirmobile/models/ujian_form_model.dart';
+import 'package:tugasakhirmobile/models/ujian_nilai_model.dart';
 import 'package:tugasakhirmobile/models/ujian_soal_model.dart';
 
 abstract class UjianService {
@@ -15,6 +16,8 @@ abstract class UjianService {
   Future<Either<ErrorEither, Response>> sendUjian(
       final UjianFormSubmit form, final int id);
   Future<Either<ErrorEither, CheckExamModel>> checkExam(final int idujian);
+  Future<Either<ErrorEither, NilaiUjianModel>> getNilaiUjianUser(
+      final int iduser);
 }
 
 class UjianRepository implements UjianService {
@@ -36,6 +39,31 @@ class UjianRepository implements UjianService {
             ));
         if (response.statusCode == 200) {
           return Right(QuizResponse.fromJson(response.data));
+        } else {
+          return Left(ErrorEither(400, true, response.data["message"]));
+        }
+      } catch (e) {
+        return Left(ErrorEither(400, true, e.toString()));
+      }
+    });
+  }
+
+  @override
+  Future<Either<ErrorEither, NilaiUjianModel>> getNilaiUjianUser(
+      final int iduser) {
+    dio.interceptors.add(PrettyDioLogger());
+    return SharedPrefs().getAccessToken().then((final value) async {
+      try {
+        final response = await Dio().get("$urlLink/v2/exam-result/$iduser",
+            options: Options(
+              headers: {"x-access-token": value},
+              followRedirects: false,
+              validateStatus: (final status) {
+                return status! < 500;
+              },
+            ));
+        if (response.statusCode == 200) {
+          return Right(NilaiUjianModel.fromJson(response.data));
         } else {
           return Left(ErrorEither(400, true, response.data["message"]));
         }

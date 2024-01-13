@@ -15,6 +15,7 @@ import 'package:tugasakhirmobile/viewmodel/guru_viewmodel.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugasakhirmobile/viewmodel/nilai_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/settings_viewmodel.dart';
+import 'package:tugasakhirmobile/viewmodel/ujian_nilai_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/ujian_soal_viewmodel.dart';
 import 'package:tugasakhirmobile/viewmodel/ujian_viewmodel.dart';
 
@@ -32,7 +33,8 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (final context) => GuruViewModel()),
       ChangeNotifierProvider(create: (final context) => NilaiViewModel()),
       ChangeNotifierProvider(create: (final context) => UjianViewModel()),
-      ChangeNotifierProvider(create: (final context) => SettingsViewModel())
+      ChangeNotifierProvider(create: (final context) => SettingsViewModel()),
+      ChangeNotifierProvider(create: (final context) => UjianNilaiViewModel())
     ],
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,

@@ -64,12 +64,11 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(final AppLifecycleState state) {
-    var sharedPrefs = SharedPreferences.getInstance();
+    final sharedPrefs = SharedPreferences.getInstance();
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.inactive:
         // stop timer with same second and start again when active
-          
 
         break;
       case AppLifecycleState.paused:
@@ -81,6 +80,8 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
       case AppLifecycleState.detached:
         // App is terminating
         sharedPrefs.then((final value) => value.setInt("lastTimer", seconds!));
+        break;
+      case AppLifecycleState.hidden:
         break;
     }
   }
