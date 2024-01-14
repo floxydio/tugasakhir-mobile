@@ -76,7 +76,7 @@ class UjianRepository implements UjianService {
   @override
   Future<Either<ErrorEither, UjianList>> getDataUjian() async {
     dio.interceptors.add(PrettyDioLogger());
-    final kelasId = await SharedPrefs().getKelasId();
+    final kelasId = await SharedPrefs().getKelasId(); 
     try {
       final response = await Dio().get("$urlLink/v2/ujian/$kelasId",
           options: Options(
@@ -108,6 +108,7 @@ class UjianRepository implements UjianService {
           "idujian": id,
           "semester": form.semester,
           "token": value,
+          "log": form.jawabanEssay.isEmpty ? "Selesai" : "Menunggu Review"
         };
         final response = await Dio().post("$urlLink/v2/ujian-submitted",
             data: data,

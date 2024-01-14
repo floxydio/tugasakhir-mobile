@@ -151,9 +151,35 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
                                     setState(() {
                                       isEssay = true;
                                     });
+                                  } else {
+                                    final sharedPrefs =
+                                        SharedPreferences.getInstance();
+                                    final formSubmit = UjianFormSubmit(
+                                        semester: ujianVM.semester!,
+                                        jawabanPg:
+                                            Provider.of<UjianSoalViewModel>(
+                                                    context,
+                                                    listen: false)
+                                                .jawabanPilihanRadio,
+                                        jawabanEssay: []);
+                                    Provider.of<UjianSoalViewModel>(context,
+                                            listen: false)
+                                        .sendUjian(formSubmit, () {
+                                      Navigator.pop(context);
+                                      // Remove last timer
+                                      sharedPrefs.then((final value) =>
+                                          value.remove("lastTimer"));
+                                      // Delete all value after submit
+                                      Provider.of<UjianSoalViewModel>(context,
+                                              listen: false)
+                                          .jawabanPilihanRadio
+                                          .clear();
+                                    });
                                   }
                                 },
-                                child: const Text("Submit Pilihan Ganda")),
+                                child: Text(ujianVM.essay.isEmpty
+                                    ? "Submit Jawaban"
+                                    : "Lanjut ke Essay")),
                           )
                         : SizedBox(
                             width: Get.width,
