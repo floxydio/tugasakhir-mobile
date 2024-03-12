@@ -1,9 +1,6 @@
 // Material.dart adalah library yang berisi widget yang sering digunakan
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:tugasakhirmobile/screens/register/register_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/auth_viewmodel.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -138,34 +135,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                           passwordController.text
                                               .replaceAll(" ", ""));
                                     },
-                                    child: const Text("Sign In"))),
+                                    child: const Text("Masuk"))),
                             const SizedBox(
                               height: 10,
                             ),
                             const SizedBox(
                               height: 20,
                             ),
-                            Center(
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    const TextSpan(text: 'Belum Punya Akun? '),
-                                    TextSpan(
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () =>
-                                            Get.to(const RegisterScreen()),
-                                      text: 'Sign Up',
-                                      style: const TextStyle(
-                                          color: Color(0xff345FB4),
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Center(
+                            //   child: Text.rich(
+                            //     TextSpan(
+                            //       children: [
+                            //         const TextSpan(text: 'Belum Punya Akun? '),
+                            //         TextSpan(
+                            //           recognizer: TapGestureRecognizer()
+                            //             ..onTap = () =>
+                            //                 Get.to(const RegisterScreen()),
+                            //           text: 'Sign Up',
+                            //           style: const TextStyle(
+                            //               color: Color(0xff345FB4),
+                            //               fontWeight: FontWeight.bold),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                             const SizedBox(
                               height: 10,
-                          )
+                            )
                           ],
                         ),
                       ),

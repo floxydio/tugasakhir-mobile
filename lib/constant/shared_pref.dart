@@ -31,25 +31,25 @@ class SharedPrefs {
     return prefs.setInt('kelas_id', kelasId);
   }
 
-  Future<String> getIdUser() async {
+  Future<int> getIdUser() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('id_user') ?? '';
+    return prefs.getInt('id_user') ?? 0;
   }
 
-  Future<bool> setIdUser(final String token) async {
+  Future<bool> setIdUser(final int id) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setString('id_user', token);
+    return prefs.setInt('id_user', id);
   }
 
-  Future<bool> setTodayAbsen(final int idPelajaran) async {
+  Future<bool> setTodayAbsen() async {
     final date = DateTime.now();
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setBool('today_absen_${date.day}_$idPelajaran', true);
+    return prefs.setBool('today_absen_${date.day}', true);
   }
 
-  Future<bool?> getAbsenToday(final int idPelajaran) async {
+  Future<bool?> getAbsenToday() async {
     final date = DateTime.now();
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool("today_absen_${date.day}_$idPelajaran");
+    return prefs.getBool("today_absen_${date.day}");
   }
 }

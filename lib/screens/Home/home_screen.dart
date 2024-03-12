@@ -6,7 +6,6 @@ import 'package:tugasakhirmobile/constant/intmonth_constant.dart';
 import 'package:tugasakhirmobile/notification/notification_service.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_detail.dart';
 import 'package:tugasakhirmobile/screens/absen/absen_screen.dart';
-import 'package:tugasakhirmobile/screens/nilai/nilai.screen.dart';
 import 'package:tugasakhirmobile/screens/profile/profile_screen.dart';
 import 'package:tugasakhirmobile/screens/ujian/ujian_screen.dart';
 import 'package:tugasakhirmobile/viewmodel/absen_viewmodel.dart';
@@ -58,15 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 23,
           color: Color(0xff185FA9),
         )),
-    IconBuild(
-        onTap: () {},
-        page: const NilaiScreen(),
-        name: "Nilai",
-        iconName: const Icon(
-          Icons.library_add,
-          size: 23,
-          color: Color(0xff185FA9),
-        )),
+    // IconBuild(
+    //     onTap: () {},
+    //     page: const NilaiScreen(),
+    //     name: "Nilai",
+    //     iconName: const Icon(
+    //       Icons.library_add,
+    //       size: 23,
+    //       color: Color(0xff185FA9),
+    //     )),
     // IconBuild(
     //   onTap: () {},
     //   page: null,

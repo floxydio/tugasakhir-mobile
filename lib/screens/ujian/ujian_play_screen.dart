@@ -376,8 +376,9 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
               ],
             ),
           ),
-          body: WillPopScope(
-            onWillPop: () async {
+          body: PopScope(
+            // canPop: true,
+            onPopInvoked: (final bool isPop) async {
               final sharedPrefs = await SharedPreferences.getInstance();
               Get.defaultDialog(
                   title: "Peringatan",
@@ -394,7 +395,6 @@ class _UjianPlayState extends State<UjianPlay> with WidgetsBindingObserver {
                     // dismiss dialog
                     // Get.back();
                   });
-              return false;
             },
             child: SingleChildScrollView(
               child: SafeArea(

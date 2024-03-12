@@ -74,127 +74,90 @@ class _AbsenPageState extends State<AbsenPage> {
               const SizedBox(
                 height: 20,
               ),
-              absenVM.absenData.isEmpty
-                  ? const Center(child: Text("Jadwal Tidak Ditemukan"))
-                  : Center(
-                      child: Column(children: [
-                        Text(
-                          absenVM.getDay.toString(),
-                          style: const TextStyle(
-                              fontSize: 26, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 60,
-                        ),
-                        Text(
-                          absenVM.absenData[0].nama.toString(),
-                          style: const TextStyle(fontSize: 24),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "(${absenVM.absenData[0].users?.nama.toString()})",
-                          style: const TextStyle(fontSize: 18),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          width: Get.width,
-                          height: 50,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorConstant.colorPrimary),
-                              onPressed: () async {
-                                final data = CreateAbsen(
-                                    userId: authVm.dataJwt!.id!,
-                                    guruId:
-                                        absenVM.absenData[0].users?.userId ?? 0,
-                                    kelasId:
-                                        absenVM.absenData[0].kelas?.id ?? 0,
-                                    pelajaranId:
-                                        absenVM.absenData[0].pelajaranId ?? 0,
-                                    keterangan: "ABSEN",
-                                    reason: "-");
-                                final checkAbsen = await SharedPrefs()
-                                    .getAbsenToday(
-                                        absenVM.absenData[0].pelajaranId!);
-                                if (checkAbsen == true) {
-                                  NotificationService().showNotification(
-                                      "Gagal Absen",
-                                      "Anda Sudah Absen Hari Ini");
-                                } else {
-                                  // ignore: use_build_context_synchronously
-                                  Provider.of<AbsenViewModel>(context,
-                                          listen: false)
-                                      .createAbsen(data);
-                                }
-                              },
-                              child: const Text("Absen Sekarang")),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        SizedBox(
-                          width: Get.width,
-                          height: 50,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: ColorConstant.colorPrimary),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (final context) {
-                                      return AlertDialog(
-                                        title: const Text("Izin Absen"),
-                                        content: TextFormField(
-                                          controller: keteranganController,
-                                          decoration: const InputDecoration(
-                                              hintText: "Masukkan Alasan"),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: const Text("Batal")),
-                                          TextButton(
-                                              onPressed: () {
-                                                final data = CreateAbsen(
-                                                    userId: authVm.dataJwt!.id!,
-                                                    guruId: absenVM.absenData[0]
-                                                            .users?.userId ??
-                                                        0,
-                                                    kelasId: absenVM
-                                                            .absenData[0]
-                                                            .kelas
-                                                            ?.id ??
-                                                        0,
-                                                    pelajaranId: absenVM
-                                                        .absenData[0]
-                                                        .pelajaranId!,
-                                                    keterangan: "IZIN",
-                                                    reason: keteranganController
-                                                        .text);
-                                                Provider.of<AbsenViewModel>(
-                                                        context,
-                                                        listen: false)
-                                                    .createAbsen(data);
-                                                keteranganController.clear();
-                                              },
-                                              child: const Text("Kirim"))
-                                        ],
-                                      );
-                                    });
-                              },
-                              child: const Text("Izin Absen")),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                      ]),
-                    )
+              Center(
+                child: Column(children: [
+                  Text(
+                    absenVM.getDay.toString(),
+                    style: const TextStyle(
+                        fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  SizedBox(
+                    width: Get.width,
+                    height: 50,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorConstant.colorPrimary),
+                        onPressed: () async {
+                          final data = CreateAbsen(
+                              userId: authVm.dataJwt!.id!,
+                              keterangan: "ABSEN",
+                              reason: "-");
+                          final checkAbsen =
+                              await SharedPrefs().getAbsenToday();
+                          if (checkAbsen == true) {
+                            NotificationService().showNotification(
+                                "Gagal Absen", "Anda Sudah Absen Hari Ini");
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            Provider.of<AbsenViewModel>(context, listen: false)
+                                .createAbsen(data);
+                          }
+                        },
+                        child: const Text("Absen Sekarang")),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: Get.width,
+                    height: 50,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: ColorConstant.colorPrimary),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (final context) {
+                                return AlertDialog(
+                                  title: const Text("Izin Absen"),
+                                  content: TextFormField(
+                                    controller: keteranganController,
+                                    decoration: const InputDecoration(
+                                        hintText: "Masukkan Alasan"),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Batal")),
+                                    TextButton(
+                                        onPressed: () {
+                                          final data = CreateAbsen(
+                                              userId: authVm.dataJwt!.id!,
+                                              keterangan: "IZIN",
+                                              reason:
+                                                  keteranganController.text);
+                                          Provider.of<AbsenViewModel>(context,
+                                                  listen: false)
+                                              .createAbsen(data);
+                                          keteranganController.clear();
+                                        },
+                                        child: const Text("Kirim"))
+                                  ],
+                                );
+                              });
+                        },
+                        child: const Text("Izin Absen")),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                ]),
+              )
             ],
           ),
         )),

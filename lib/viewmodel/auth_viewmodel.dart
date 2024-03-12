@@ -34,7 +34,9 @@ class AuthViewModel extends ChangeNotifier {
     authRepository.fold((final l) {
       EasyLoading.showError(l.message!);
     }, (final r) async {
+      // print(r);
       await SharedPrefs().setAccessToken(r.token!);
+      await SharedPrefs().setIdUser(r.userId!);
       Get.off(const HomeScreen());
     });
     EasyLoading.dismiss();

@@ -104,12 +104,9 @@ class AbsenRepository implements AbsenService {
 
     final Map<String, dynamic> formData = {
       "user_id": form.userId,
-      "guru_id": form.guruId,
-      "pelajaran_id": form.pelajaranId,
-      "kelas_id": form.kelasId,
       "keterangan": form.keterangan,
       "reason": form.reason,
-      "day": "${now.day}",
+      "day": "${now.day}", 
       "month": "${now.month}",
       "year": "${now.year}",
       "time": DateFormat.Hms().format(now)

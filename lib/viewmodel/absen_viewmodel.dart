@@ -103,7 +103,7 @@ class AbsenViewModel extends ChangeNotifier {
         (final r) => {
               NotificationService().showNotification("Berhasil Absen",
                   "Anda Berhasil Absen Pada ${DateFormat.Hms().format(now)}"),
-              SharedPrefs().setTodayAbsen(absenForm.pelajaranId)
+              SharedPrefs().setTodayAbsen()
             });
   }
 }

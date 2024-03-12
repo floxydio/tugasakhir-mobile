@@ -39,7 +39,8 @@ Future<void> main() async {
     child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
-      theme: ThemeData(textTheme: GoogleFonts.poppinsTextTheme()),
+      theme: ThemeData(
+          textTheme: GoogleFonts.poppinsTextTheme(), useMaterial3: false),
       builder: EasyLoading.init(),
     ),
   ));

@@ -55,7 +55,6 @@ class AuthRepository implements AuthService {
     final Map<String, dynamic> data = {
       "username": username,
       "password": password,
-      "role": "0",
     };
 
     try {
